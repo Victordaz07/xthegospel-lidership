@@ -1,0 +1,245 @@
+/**
+ * MemberLookup Styles
+ * Search and verify members by xTheGospel ID
+ */
+
+.member-lookup {
+  padding: 20px;
+}
+
+.member-lookup__header {
+  margin-bottom: 24px;
+}
+
+.member-lookup__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a2e);
+  margin: 0 0 8px 0;
+}
+
+.member-lookup__subtitle {
+  font-size: 14px;
+  color: var(--text-secondary, #64748b);
+  margin: 0;
+}
+
+/* Search */
+.member-lookup__search {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.member-lookup__input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.member-lookup__input-icon {
+  position: absolute;
+  left: 16px;
+  color: #A67C52;
+  font-size: 16px;
+}
+
+.member-lookup__input {
+  width: 100%;
+  padding: 14px 44px 14px 48px;
+  border: 2px solid rgba(166, 124, 82, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: #3A5F8A;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.member-lookup__input::placeholder {
+  color: #C9A882;
+  text-transform: uppercase;
+}
+
+.member-lookup__input:focus {
+  outline: none;
+  border-color: #A67C52;
+  box-shadow: 0 0 0 4px rgba(166, 124, 82, 0.1);
+}
+
+.member-lookup__clear {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: #A67C52;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.member-lookup__clear:hover {
+  background: rgba(166, 124, 82, 0.1);
+}
+
+.member-lookup__btn {
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #3A5F8A 0%, #2A4A6B 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.member-lookup__btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(58, 95, 138, 0.3);
+}
+
+.member-lookup__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.member-lookup__spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Error */
+.member-lookup__error {
+  padding: 14px 18px;
+  background: #F5E8E6;
+  border: 1px solid #C45C4A;
+  border-radius: 12px;
+  color: #9A3D2E;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Result */
+.member-lookup__result {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Details */
+.member-lookup__details {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(166, 124, 82, 0.15);
+}
+
+.member-lookup__details-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #523826;
+  margin: 0 0 20px 0;
+}
+
+.member-lookup__info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.member-lookup__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.member-lookup__info-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8C6340;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.member-lookup__info-value {
+  font-size: 15px;
+  color: #523826;
+  font-weight: 500;
+}
+
+/* Verify Button */
+.member-lookup__verify-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #4A7C8C 0%, #2F5A66 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.member-lookup__verify-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(74, 124, 140, 0.4);
+}
+
+.member-lookup__verify-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Verified Badge */
+.member-lookup__verified-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 24px;
+  background: #E5EEF0;
+  color: #2F5A66;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.member-lookup__verified-badge svg {
+  color: #4A7C8C;
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .member-lookup__search {
+    flex-direction: column;
+  }
+
+  .member-lookup__btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .member-lookup__info-grid {
+    grid-template-columns: 1fr;
+  }
+}

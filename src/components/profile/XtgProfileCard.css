@@ -1,0 +1,319 @@
+/**
+ * XtgProfileCard Styles
+ * A shareable ID card with elegant brass/cream palette
+ */
+
+.xtg-card {
+  background: linear-gradient(135deg, #FDFBF8 0%, #F5EDE3 100%);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid rgba(166, 124, 82, 0.15);
+  box-shadow: 0 8px 32px rgba(140, 99, 64, 0.12);
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* Header */
+.xtg-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.xtg-card__logo {
+  font-size: 14px;
+  font-weight: 700;
+  color: #A67C52;
+  letter-spacing: 0.02em;
+}
+
+.xtg-card__badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.xtg-card__badge[data-status="brass"] {
+  background: linear-gradient(135deg, #F5EDE3, #EDE5D8);
+  color: #8C6340;
+}
+
+.xtg-card__badge[data-status="success"] {
+  background: linear-gradient(135deg, #E5EEF0, #C5D9DB);
+  color: #2F5A66;
+}
+
+.xtg-card__badge[data-status="primary"] {
+  background: linear-gradient(135deg, #E8EEF4, #D4E0ED);
+  color: #3A5F8A;
+}
+
+.xtg-card__badge[data-status="neutral"] {
+  background: #E5E7EB;
+  color: #4B5563;
+}
+
+.xtg-card__badge[data-status="accent"] {
+  background: linear-gradient(135deg, #F5EDE3, #EDE5D8);
+  color: #A67C52;
+}
+
+/* Profile section */
+.xtg-card__profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.xtg-card__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C9A882, #A67C52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(166, 124, 82, 0.3);
+  overflow: hidden;
+}
+
+.xtg-card__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.xtg-card__initials {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.xtg-card__name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #523826;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.xtg-card__unit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6F4D32;
+}
+
+.xtg-card__unit svg {
+  color: #A67C52;
+}
+
+/* ID Section */
+.xtg-card__id-section {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(166, 124, 82, 0.1);
+}
+
+.xtg-card__id-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8C6340;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.xtg-card__id-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.xtg-card__id {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: #3A5F8A;
+  letter-spacing: 0.05em;
+}
+
+.xtg-card__id-copy {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #A67C52;
+  transition: all 0.2s ease;
+}
+
+.xtg-card__id-copy:hover {
+  background: rgba(166, 124, 82, 0.1);
+}
+
+.xtg-card__id-copy svg {
+  font-size: 16px;
+}
+
+/* Verified badge */
+.xtg-card__verified {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2F5A66;
+  background: #E5EEF0;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+}
+
+.xtg-card__verified svg {
+  color: #4A7C8C;
+}
+
+/* Share button */
+.xtg-card__share-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #C9A882 0%, #A67C52 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(166, 124, 82, 0.3);
+}
+
+.xtg-card__share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(166, 124, 82, 0.4);
+}
+
+.xtg-card__share-btn:active {
+  transform: translateY(0);
+}
+
+/* Footer */
+.xtg-card__footer {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #8C6340;
+}
+
+/* Compact variant */
+.xtg-card--compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1px solid rgba(166, 124, 82, 0.15);
+  max-width: none;
+}
+
+.xtg-card__avatar-small {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C9A882, #A67C52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.xtg-card__avatar-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.xtg-card__info-compact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.xtg-card__name-compact {
+  font-size: 15px;
+  font-weight: 600;
+  color: #523826;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.xtg-card__id-compact {
+  font-size: 12px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: #3A5F8A;
+  font-weight: 500;
+}
+
+.xtg-card__copy-btn {
+  background: rgba(166, 124, 82, 0.1);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #A67C52;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.xtg-card__copy-btn:hover {
+  background: rgba(166, 124, 82, 0.2);
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+  .xtg-card {
+    padding: 32px;
+  }
+
+  .xtg-card__avatar {
+    width: 96px;
+    height: 96px;
+  }
+
+  .xtg-card__initials {
+    font-size: 32px;
+  }
+
+  .xtg-card__name {
+    font-size: 26px;
+  }
+
+  .xtg-card__id {
+    font-size: 24px;
+  }
+}

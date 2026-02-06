@@ -1,20 +1,23 @@
 /**
  * Profile Page
  * 
- * User profile with account info, role display, and logout functionality.
+ * User profile with account info, role display, ward info, and logout functionality.
  */
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { useUserRoleStore } from '../../../state/user/useUserRoleStore';
+import { useWardStore } from '../../../state/ward/useWardStore';
 import { PageShell, Card, Button, SectionTitle } from '../../../ui';
+import { WardCodeCard } from '../../ward/components';
 import './ProfilePage.css';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { user, logout, isLoading } = useAuth();
   const { getRoleLabel, getRoleIcon, getRoleOrganization, isBishopric } = useUserRoleStore();
+  const { ward, membership } = useWardStore();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -71,6 +74,53 @@ const ProfilePage: React.FC = () => {
           </div>
         </Card>
 
+        {/* Ward Section */}
+        <div className="profile-section">
+          <SectionTitle>Tu Barrio</SectionTitle>
+          
+          <Card variant="default" padding="md" className="profile-menu">
+            <div className="menu-item">
+              <span className="menu-icon">🏛️</span>
+              <div className="menu-content">
+                <span className="menu-label">{ward?.type === 'branch' ? 'Rama' : 'Barrio'}</span>
+                <span className="menu-value">{ward?.name || membership?.wardName || '---'}</span>
+              </div>
+            </div>
+            
+            {(ward?.stakeName || membership?.stakeName) && (
+              <>
+                <div className="menu-divider" />
+                <div className="menu-item">
+                  <span className="menu-icon">⛪</span>
+                  <div className="menu-content">
+                    <span className="menu-label">{ward?.stakeType === 'district' ? 'Distrito' : 'Estaca'}</span>
+                    <span className="menu-value">{ward?.stakeName || membership?.stakeName}</span>
+                  </div>
+                </div>
+              </>
+            )}
+            
+            {membership?.joinedVia && (
+              <>
+                <div className="menu-divider" />
+                <div className="menu-item">
+                  <span className="menu-icon">📅</span>
+                  <div className="menu-content">
+                    <span className="menu-label">Conectado</span>
+                    <span className="menu-value">
+                      {membership.joinedVia === 'created' ? 'Creador del barrio' : 
+                       membership.joinedVia === 'code' ? 'Por código' : 'Invitado'}
+                    </span>
+                  </div>
+                </div>
+              </>
+            )}
+          </Card>
+        </div>
+
+        {/* Ward Code Card - Only for Bishopric */}
+        <WardCodeCard />
+
         {/* Role Section */}
         <div className="profile-section">
           <SectionTitle>Tu Llamamiento</SectionTitle>
@@ -88,7 +138,7 @@ const ProfilePage: React.FC = () => {
               <>
                 <div className="menu-divider" />
                 <div className="menu-item">
-                  <span className="menu-icon">🏛️</span>
+                  <span className="menu-icon">📋</span>
                   <div className="menu-content">
                     <span className="menu-label">Organización</span>
                     <span className="menu-value">{roleOrg}</span>
@@ -155,7 +205,7 @@ const ProfilePage: React.FC = () => {
               <span className="menu-icon">💾</span>
               <div className="menu-content">
                 <span className="menu-label">Almacenamiento</span>
-                <span className="menu-value">Local + Cloud (opcional)</span>
+                <span className="menu-value">Local + Cloud</span>
               </div>
             </div>
           </Card>

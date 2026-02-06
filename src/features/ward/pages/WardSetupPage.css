@@ -1,0 +1,291 @@
+/**
+ * Ward Setup Page Styles
+ */
+
+.ward-setup-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1F3A5F 0%, #162541 100%);
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.ward-setup-container {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Back Button */
+.ward-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.ward-back-button:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Header */
+.ward-setup-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-top: 20px;
+}
+
+.ward-setup-icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+}
+
+.ward-setup-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
+}
+
+.ward-setup-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ward-setup-subtitle strong {
+  color: #A67C52;
+}
+
+/* Options */
+.ward-setup-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ward-option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  text-align: center;
+}
+
+.ward-option-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.ward-option-create {
+  border-color: rgba(166, 124, 82, 0.3);
+}
+
+.ward-option-create:hover {
+  border-color: #A67C52;
+}
+
+.ward-option-join {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.ward-option-join:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.option-icon {
+  font-size: 32px;
+}
+
+.option-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.option-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Note */
+.ward-setup-note {
+  background: rgba(166, 124, 82, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.ward-setup-note p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+/* Form */
+.ward-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.form-group input {
+  padding: 14px 16px;
+  font-size: 16px;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  transition: all 200ms ease;
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #A67C52;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Radio Group */
+.radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #A67C52;
+}
+
+.radio-option span {
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+/* Code Input */
+.code-input {
+  font-size: 28px !important;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+/* Error */
+.form-error {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #FF6B6B;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Submit Button */
+.ward-submit-button {
+  margin-top: 8px;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1F3A5F;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.ward-submit-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.ward-submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Help */
+.ward-setup-help {
+  margin-top: 32px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.ward-setup-help p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ward-setup-help .help-text {
+  margin-top: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .ward-setup-page {
+    padding: 16px;
+  }
+
+  .ward-setup-title {
+    font-size: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .code-input {
+    font-size: 24px !important;
+  }
+}

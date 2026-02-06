@@ -1,0 +1,102 @@
+/**
+ * Ward Code Card Styles
+ */
+
+.ward-code-section {
+  margin-bottom: 24px;
+}
+
+.ward-code-card {
+  text-align: center;
+}
+
+.code-display {
+  margin-bottom: 20px;
+}
+
+.code-label {
+  display: block;
+  font-size: 13px;
+  color: var(--am-color-text-muted, #64748b);
+  margin-bottom: 12px;
+}
+
+.code-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--am-color-primary, #1F3A5F);
+  letter-spacing: 4px;
+  font-family: monospace;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #F0F3F8 0%, #E8ECF3 100%);
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.code-ward-name {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--am-color-text-secondary, #475569);
+}
+
+.code-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.code-actions button:first-child {
+  min-width: 200px;
+}
+
+.regenerate-link {
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--am-color-text-muted, #64748b);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.regenerate-link:hover {
+  color: var(--am-color-primary, #1F3A5F);
+}
+
+.regenerate-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Confirm Dialog */
+.regenerate-confirm {
+  margin-top: 20px;
+  padding: 16px;
+  background: #FFF9E6;
+  border: 1px solid #F0D060;
+  border-radius: 12px;
+}
+
+.regenerate-confirm p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #8B6914;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .code-value {
+    font-size: 28px;
+    letter-spacing: 2px;
+    padding: 12px 16px;
+  }
+}

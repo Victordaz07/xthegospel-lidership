@@ -2,7 +2,8 @@
  * App Router - xTheGospel Leaders
  * 
  * Main routing configuration for the Leaders app.
- * Includes protected routes and authentication flow.
+ * Authentication flow:
+ * 1. Login -> Select Role -> Ward Setup -> Dashboard
  */
 
 import React from 'react';
@@ -11,9 +12,13 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 // Auth pages
 import { LoginPage, RoleSelectionPage } from '../features/auth';
 
+// Ward pages
+import { WardSetupPage } from '../features/ward';
+
 // Protected routes
 import ProtectedRoute from './ProtectedRoute';
 import RoleRequiredRoute from './RoleRequiredRoute';
+import WardRequiredRoute from './WardRequiredRoute';
 import LeadershipCallingsRoutes from './LeadershipCallingsRoutes';
 
 const AppRouter: React.FC = () => {
@@ -32,13 +37,28 @@ const AppRouter: React.FC = () => {
         }
       />
       
+      {/* Ward setup (requires auth + role, but not ward) */}
+      <Route
+        path="/ward-setup"
+        element={
+          <ProtectedRoute>
+            <RoleRequiredRoute>
+              <WardSetupPage />
+            </RoleRequiredRoute>
+          </ProtectedRoute>
+        }
+      />
+      
       {/* Protected routes - Leadership Callings module */}
+      {/* Requires: Auth + Role + Ward */}
       <Route
         path="/*"
         element={
           <ProtectedRoute>
             <RoleRequiredRoute>
-              <LeadershipCallingsRoutes />
+              <WardRequiredRoute>
+                <LeadershipCallingsRoutes />
+              </WardRequiredRoute>
             </RoleRequiredRoute>
           </ProtectedRoute>
         }
