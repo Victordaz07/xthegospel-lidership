@@ -16,7 +16,10 @@ import {
   serverTimestamp,
   Timestamp,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { getFirebaseDb } from './firebaseApp';
+
+// Get db instance lazily
+const getDb = () => getFirebaseDb();
 import {
   Ward,
   WardJoinCode,
@@ -42,7 +45,7 @@ export async function createWard(
   request: CreateWardRequest,
   creatorUid: string
 ): Promise<Ward> {
-  const wardId = doc(collection(db, WARDS_COLLECTION)).id;
+  const wardId = doc(collection(getDb(), WARDS_COLLECTION)).id;
   const joinCode = generateWardCode();
   const now = Date.now();
 
@@ -65,7 +68,7 @@ export async function createWard(
   };
 
   // Save ward
-  await setDoc(doc(db, WARDS_COLLECTION, wardId), ward);
+  await setDoc(doc(getDb(), WARDS_COLLECTION, wardId), ward);
 
   // Save join code for lookup
   const codeData: WardJoinCode = {
@@ -81,7 +84,7 @@ export async function createWard(
   
   // Use normalized code as document ID for easy lookup
   const normalizedCode = normalizeWardCode(joinCode);
-  await setDoc(doc(db, WARD_CODES_COLLECTION, normalizedCode), codeData);
+  await setDoc(doc(getDb(), WARD_CODES_COLLECTION, normalizedCode), codeData);
 
   // Update creator's ward membership
   await updateUserWardMembership(creatorUid, {
@@ -100,7 +103,7 @@ export async function createWard(
 // ============================================================================
 
 export async function getWard(wardId: string): Promise<Ward | null> {
-  const wardDoc = await getDoc(doc(db, WARDS_COLLECTION, wardId));
+  const wardDoc = await getDoc(doc(getDb(), WARDS_COLLECTION, wardId));
   if (!wardDoc.exists()) return null;
   return wardDoc.data() as Ward;
 }
@@ -122,7 +125,7 @@ export async function joinWardByCode(
   const normalizedCode = normalizeWardCode(code);
   
   // Look up the code
-  const codeDoc = await getDoc(doc(db, WARD_CODES_COLLECTION, normalizedCode));
+  const codeDoc = await getDoc(doc(getDb(), WARD_CODES_COLLECTION, normalizedCode));
   
   if (!codeDoc.exists()) {
     return { success: false, error: 'invalid_code' };
@@ -146,7 +149,7 @@ export async function joinWardByCode(
   }
 
   // Check if user is already a member
-  const userDoc = await getDoc(doc(db, USERS_COLLECTION, uid));
+  const userDoc = await getDoc(doc(getDb(), USERS_COLLECTION, uid));
   if (userDoc.exists()) {
     const userData = userDoc.data();
     if (userData.wardMembership?.wardId === codeData.wardId) {
@@ -172,12 +175,12 @@ export async function joinWardByCode(
   });
 
   // Increment usage counter
-  await updateDoc(doc(db, WARD_CODES_COLLECTION, normalizedCode), {
+  await updateDoc(doc(getDb(), WARD_CODES_COLLECTION, normalizedCode), {
     currentUses: codeData.currentUses + 1,
   });
 
   // Update ward leader count
-  await updateDoc(doc(db, WARDS_COLLECTION, codeData.wardId), {
+  await updateDoc(doc(getDb(), WARDS_COLLECTION, codeData.wardId), {
     leaderCount: (ward.leaderCount || 0) + 1,
     updatedAt: now,
   });
@@ -198,7 +201,7 @@ export async function regenerateWardCode(
 
   // Deactivate old code
   const oldNormalizedCode = normalizeWardCode(ward.joinCode);
-  await updateDoc(doc(db, WARD_CODES_COLLECTION, oldNormalizedCode), {
+  await updateDoc(doc(getDb(), WARD_CODES_COLLECTION, oldNormalizedCode), {
     isActive: false,
   });
 
@@ -219,10 +222,10 @@ export async function regenerateWardCode(
   };
 
   const normalizedNewCode = normalizeWardCode(newCode);
-  await setDoc(doc(db, WARD_CODES_COLLECTION, normalizedNewCode), newCodeData);
+  await setDoc(doc(getDb(), WARD_CODES_COLLECTION, normalizedNewCode), newCodeData);
 
   // Update ward
-  await updateDoc(doc(db, WARDS_COLLECTION, wardId), {
+  await updateDoc(doc(getDb(), WARDS_COLLECTION, wardId), {
     joinCode: newCode,
     joinCodeCreatedAt: now,
     joinCodeCreatedBy: uid,
@@ -240,7 +243,7 @@ async function updateUserWardMembership(
   uid: string,
   membership: UserWardMembership
 ): Promise<void> {
-  const userRef = doc(db, USERS_COLLECTION, uid);
+  const userRef = doc(getDb(), USERS_COLLECTION, uid);
   const userDoc = await getDoc(userRef);
 
   if (userDoc.exists()) {
@@ -264,7 +267,7 @@ async function updateUserWardMembership(
 export async function getUserWardMembership(
   uid: string
 ): Promise<UserWardMembership | null> {
-  const userDoc = await getDoc(doc(db, USERS_COLLECTION, uid));
+  const userDoc = await getDoc(doc(getDb(), USERS_COLLECTION, uid));
   if (!userDoc.exists()) return null;
   
   const data = userDoc.data();
@@ -277,7 +280,7 @@ export async function getUserWardMembership(
 
 export async function getWardLeaders(wardId: string): Promise<string[]> {
   const q = query(
-    collection(db, USERS_COLLECTION),
+    collection(getDb(), USERS_COLLECTION),
     where('wardMembership.wardId', '==', wardId)
   );
   
@@ -290,7 +293,7 @@ export async function getWardLeaders(wardId: string): Promise<string[]> {
 // ============================================================================
 
 export async function leaveWard(uid: string): Promise<void> {
-  const userRef = doc(db, USERS_COLLECTION, uid);
+  const userRef = doc(getDb(), USERS_COLLECTION, uid);
   const userDoc = await getDoc(userRef);
   
   if (!userDoc.exists()) return;
@@ -308,7 +311,7 @@ export async function leaveWard(uid: string): Promise<void> {
   if (wardId) {
     const ward = await getWard(wardId);
     if (ward && ward.leaderCount && ward.leaderCount > 0) {
-      await updateDoc(doc(db, WARDS_COLLECTION, wardId), {
+      await updateDoc(doc(getDb(), WARDS_COLLECTION, wardId), {
         leaderCount: ward.leaderCount - 1,
         updatedAt: Date.now(),
       });
