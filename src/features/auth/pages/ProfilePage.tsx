@@ -1,18 +1,20 @@
 /**
  * Profile Page
  * 
- * User profile with account info and logout functionality.
+ * User profile with account info, role display, and logout functionality.
  */
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { useUserRoleStore } from '../../../state/user/useUserRoleStore';
 import { PageShell, Card, Button, SectionTitle } from '../../../ui';
 import './ProfilePage.css';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { user, logout, isLoading } = useAuth();
+  const { getRoleLabel, getRoleIcon, getRoleOrganization, isBishopric } = useUserRoleStore();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -26,6 +28,10 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  const handleChangeRole = () => {
+    navigate('/select-role');
+  };
+
   // Get user initials for avatar
   const getInitials = (email: string | null | undefined): string => {
     if (!email) return '?';
@@ -35,6 +41,9 @@ const ProfilePage: React.FC = () => {
 
   // Format email for display
   const displayEmail = user?.email || 'Usuario';
+  const roleLabel = getRoleLabel();
+  const roleIcon = getRoleIcon();
+  const roleOrg = getRoleOrganization();
 
   return (
     <PageShell title="Perfil" variant="default">
@@ -46,16 +55,59 @@ const ProfilePage: React.FC = () => {
               {getInitials(user?.email)}
             </div>
             <div className="profile-info">
-              <h2 className="profile-name">Líder</h2>
+              <h2 className="profile-name">{roleLabel}</h2>
               <p className="profile-email">{displayEmail}</p>
             </div>
           </div>
           
-          <div className="profile-badge">
-            <span className="badge-icon">👔</span>
-            <span className="badge-text">Liderazgo de Barrio/Estaca</span>
+          <div className="profile-badge-container">
+            <div className={`profile-badge ${isBishopric() ? 'profile-badge-bishopric' : ''}`}>
+              <span className="badge-icon">{roleIcon}</span>
+              <span className="badge-text">{roleOrg || 'Liderazgo'}</span>
+            </div>
+            {isBishopric() && (
+              <span className="profile-badge-level">Obispado</span>
+            )}
           </div>
         </Card>
+
+        {/* Role Section */}
+        <div className="profile-section">
+          <SectionTitle>Tu Llamamiento</SectionTitle>
+          
+          <Card variant="default" padding="md" className="profile-menu">
+            <div className="menu-item">
+              <span className="menu-icon">{roleIcon}</span>
+              <div className="menu-content">
+                <span className="menu-label">Llamamiento actual</span>
+                <span className="menu-value">{roleLabel}</span>
+              </div>
+            </div>
+            
+            {roleOrg && (
+              <>
+                <div className="menu-divider" />
+                <div className="menu-item">
+                  <span className="menu-icon">🏛️</span>
+                  <div className="menu-content">
+                    <span className="menu-label">Organización</span>
+                    <span className="menu-value">{roleOrg}</span>
+                  </div>
+                </div>
+              </>
+            )}
+            
+            <div className="menu-divider" />
+            
+            <button className="menu-item menu-item-button" onClick={handleChangeRole}>
+              <span className="menu-icon">🔄</span>
+              <div className="menu-content">
+                <span className="menu-value">Cambiar llamamiento</span>
+              </div>
+              <span className="menu-arrow">→</span>
+            </button>
+          </Card>
+        </div>
 
         {/* Account Section */}
         <div className="profile-section">

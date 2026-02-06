@@ -55,6 +55,13 @@
   margin: 0;
 }
 
+.profile-badge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
 .profile-badge {
   display: inline-flex;
   align-items: center;
@@ -64,6 +71,19 @@
   border-radius: 999px;
   font-size: 13px;
   color: #1F3A5F;
+}
+
+.profile-badge-bishopric {
+  background: linear-gradient(135deg, #1F3A5F 0%, #2C4F83 100%);
+  color: #FFFFFF;
+}
+
+.profile-badge-level {
+  font-size: 11px;
+  font-weight: 600;
+  color: #A67C52;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .badge-icon {
@@ -127,6 +147,27 @@
   height: 1px;
   background: var(--am-color-border-soft, #E5E7EB);
   margin: 8px 0;
+}
+
+.menu-item-button {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 200ms ease;
+  border-radius: 8px;
+  margin: -8px;
+  padding: 16px 8px;
+  width: calc(100% + 16px);
+}
+
+.menu-item-button:hover {
+  background: var(--am-color-bg-subtle, #F5F5F5);
+}
+
+.menu-arrow {
+  color: var(--am-color-text-muted, #64748b);
+  font-size: 16px;
 }
 
 /* Actions */

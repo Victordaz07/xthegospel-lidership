@@ -9,10 +9,11 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Auth pages
-import { LoginPage } from '../features/auth';
+import { LoginPage, RoleSelectionPage } from '../features/auth';
 
 // Protected routes
 import ProtectedRoute from './ProtectedRoute';
+import RoleRequiredRoute from './RoleRequiredRoute';
 import LeadershipCallingsRoutes from './LeadershipCallingsRoutes';
 
 const AppRouter: React.FC = () => {
@@ -21,12 +22,24 @@ const AppRouter: React.FC = () => {
       {/* Public routes */}
       <Route path="/login" element={<LoginPage />} />
       
+      {/* Role selection (requires auth but not role) */}
+      <Route
+        path="/select-role"
+        element={
+          <ProtectedRoute>
+            <RoleSelectionPage />
+          </ProtectedRoute>
+        }
+      />
+      
       {/* Protected routes - Leadership Callings module */}
       <Route
         path="/*"
         element={
           <ProtectedRoute>
-            <LeadershipCallingsRoutes />
+            <RoleRequiredRoute>
+              <LeadershipCallingsRoutes />
+            </RoleRequiredRoute>
           </ProtectedRoute>
         }
       />
