@@ -382,7 +382,7 @@
 /* Responsive */
 @media (min-width: 640px) {
   .lm-tabs {
-    max-width: 400px;
+    max-width: 520px;
   }
   
   .lm-tab {
