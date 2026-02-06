@@ -86,24 +86,28 @@
   --border-strong: #D8D2C8;
   
   /* ===========================================
-   * ESTADOS SEMÁNTICOS
+   * ESTADOS SEMÁNTICOS (Paleta sofisticada)
    * =========================================== */
   
-  --success: #10B981;
-  --success-light: #D1FAE5;
-  --success-dark: #059669;
+  /* Success - Teal/Sage elegante (sin verde chillón) */
+  --success: #4A7C8C;
+  --success-light: #E5EEF0;
+  --success-dark: #2F5A66;
   
-  --warning: #F59E0B;
-  --warning-light: #FEF3C7;
-  --warning-dark: #D97706;
+  /* Warning - Ámbar suave (sin amarillo chillón) */
+  --warning: #B8860B;
+  --warning-light: #F5E6D3;
+  --warning-dark: #8B6914;
   
-  --danger: #EF4444;
-  --danger-light: #FEE2E2;
-  --danger-dark: #DC2626;
+  /* Danger - Terracota suave (menos agresivo) */
+  --danger: #C45C4A;
+  --danger-light: #F5E8E6;
+  --danger-dark: #9A3D2E;
   
-  --info: #3B82F6;
-  --info-light: #DBEAFE;
-  --info-dark: #2563EB;
+  /* Info - Usa el primary (coherencia visual) */
+  --info: #3A5F8A;
+  --info-light: #E8EEF4;
+  --info-dark: #2A4A6B;
   
   /* ===========================================
    * TIPOGRAFÍA (Estilo FamilyDash)
