@@ -1,0 +1,8 @@
+/**
+ * Box Primitive Styles
+ * Minimal base styles - most styling comes from inline computed styles
+ */
+
+.ui-box {
+  box-sizing: border-box;
+}

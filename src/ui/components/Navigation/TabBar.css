@@ -1,0 +1,86 @@
+/**
+ * TabBar Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-tab-bar {
+  display: flex;
+  gap: var(--space-1);
+  background: var(--color-neutral-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1);
+}
+
+.ui-tab-bar--full-width {
+  width: 100%;
+}
+
+.ui-tab-bar--full-width .ui-tab-bar__tab {
+  flex: 1;
+}
+
+.ui-tab-bar--underline {
+  background: transparent;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  padding: 0;
+  gap: var(--space-4);
+}
+
+.ui-tab-bar--pills {
+  background: transparent;
+  padding: 0;
+  gap: var(--space-2);
+}
+
+.ui-tab-bar__tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.ui-tab-bar__tab:hover {
+  color: var(--text-primary);
+}
+
+.ui-tab-bar__tab--active {
+  background: var(--background-card);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-tab-bar--underline .ui-tab-bar__tab {
+  border-radius: 0;
+  padding: var(--space-3) var(--space-1);
+  border-bottom: 2px solid transparent;
+}
+
+.ui-tab-bar--underline .ui-tab-bar__tab--active {
+  background: transparent;
+  border-bottom-color: var(--primary);
+  box-shadow: none;
+}
+
+.ui-tab-bar--pills .ui-tab-bar__tab {
+  border-radius: var(--radius-full);
+}
+
+.ui-tab-bar--pills .ui-tab-bar__tab--active {
+  background: var(--primary);
+  color: var(--text-inverse);
+}
+
+.ui-tab-bar__icon {
+  font-size: 1.1em;
+}

@@ -1,0 +1,87 @@
+/**
+ * LevelCard Styles
+ * Uses design system CSS variables exclusively
+ */
+
+.ui-level-card {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-default) 0%,
+    var(--color-primary-400) 100%
+  );
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-5);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Header */
+.ui-level-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.ui-level-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  font-size: 24px;
+}
+
+.ui-level-card__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ui-level-card__level {
+  font-size: var(--font-font-size-2xl);
+  font-weight: var(--font-font-weight-bold);
+  line-height: var(--font-line-height-tight);
+}
+
+.ui-level-card__title {
+  font-size: var(--font-font-size-sm);
+  opacity: 0.9;
+}
+
+/* Progress */
+.ui-level-card__progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+/* Override progress bar colors for level card */
+.ui-level-card .ui-progress-bar__container {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ui-level-card .ui-progress-bar__fill--primary {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.ui-level-card .ui-progress-bar__label {
+  color: var(--color-text-inverse);
+}
+
+/* Stats */
+.ui-level-card__stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-font-size-xs);
+  opacity: 0.9;
+}
+
+.ui-level-card__current {
+  font-weight: var(--font-font-weight-semibold);
+}
+
+.ui-level-card__remaining {
+  opacity: 0.8;
+}

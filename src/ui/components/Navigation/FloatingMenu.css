@@ -1,0 +1,147 @@
+/* Floating Menu - Burbuja flotante con menú vertical */
+.floating-menu {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+}
+
+.floating-menu-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-default) 100%);
+  border: none;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--color-text-inverse);
+  font-size: 18px;
+  z-index: 101;
+}
+
+.floating-menu-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+}
+
+.floating-menu-button:active {
+  transform: scale(0.95);
+}
+
+/* Dropdown Menu */
+.floating-menu-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  min-width: auto;
+  width: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.2);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: slideDown 0.3s ease-out;
+  z-index: 102;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Menu Items */
+.floating-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.floating-menu-item:hover {
+  background: var(--color-primary-100);
+  color: var(--color-primary-dark);
+}
+
+.floating-menu-item.active {
+  background: var(--color-primary-100);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.floating-menu-item-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .floating-menu {
+    top: 16px;
+    right: 16px;
+  }
+
+  .floating-menu-button {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .floating-menu-dropdown {
+    min-width: auto;
+    top: 56px;
+    right: 0;
+  }
+
+  .floating-menu-item {
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .floating-menu-item-icon {
+    font-size: 18px;
+  }
+}
+
+/* Asegurar que esté por encima de contenido pero debajo de modales (z-index: 1000) */
+.floating-menu {
+  z-index: 50;
+}
+
+.floating-menu-button {
+  z-index: 51;
+}
+
+.floating-menu-dropdown {
+  z-index: 52;
+}

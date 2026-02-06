@@ -1,0 +1,68 @@
+/**
+ * Text Primitive Styles
+ * Typography styles using new design system tokens
+ */
+
+.ui-text {
+  font-family: var(--font-family);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Size variants - applied via inline styles, classes for reference */
+.ui-text--xs {
+  font-size: var(--text-xs);
+}
+
+.ui-text--sm {
+  font-size: var(--text-sm);
+}
+
+.ui-text--base {
+  font-size: var(--text-base);
+}
+
+.ui-text--lg {
+  font-size: var(--text-lg);
+}
+
+.ui-text--xl {
+  font-size: var(--text-xl);
+}
+
+/* Color variants */
+.ui-text--primary {
+  color: var(--text-primary);
+}
+
+.ui-text--secondary {
+  color: var(--text-secondary);
+}
+
+.ui-text--tertiary {
+  color: var(--text-tertiary);
+}
+
+.ui-text--muted {
+  color: var(--text-muted);
+}
+
+.ui-text--accent {
+  color: var(--primary);
+}
+
+/* Truncation utilities */
+.ui-text--truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Multi-line truncation with line clamp */
+.ui-text--line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--line-clamp, 2);
+  overflow: hidden;
+}

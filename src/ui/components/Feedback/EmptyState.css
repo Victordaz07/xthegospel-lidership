@@ -1,0 +1,70 @@
+/**
+ * EmptyState Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-8);
+}
+
+/* Size variants */
+.ui-empty-state--sm {
+  padding: var(--space-4);
+}
+
+.ui-empty-state--lg {
+  padding: var(--space-12);
+}
+
+/* Icon */
+.ui-empty-state__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--space-4);
+  color: var(--text-tertiary);
+  font-size: 32px;
+  background: var(--background-muted);
+  border-radius: var(--radius-full);
+}
+
+.ui-empty-state--sm .ui-empty-state__icon {
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  margin-bottom: var(--space-3);
+}
+
+/* Title */
+.ui-empty-state__title {
+  margin: 0 0 var(--space-2) 0;
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-family: var(--font-family-display);
+}
+
+.ui-empty-state--sm .ui-empty-state__title {
+  font-size: var(--text-base);
+}
+
+/* Description */
+.ui-empty-state__description {
+  margin: 0 0 var(--space-4) 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 300px;
+  line-height: var(--leading-relaxed);
+}
+
+/* Action */
+.ui-empty-state__action {
+  margin-top: var(--space-2);
+}

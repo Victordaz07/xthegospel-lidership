@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "xTheGospel Leaders",
+    "loading": "Loading..."
+  },
+  "roles": {
+    "leader": {
+      "title": "Leader",
+      "description": "Access to leadership tools"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "callings": "Callings",
+    "calendar": "Calendar",
+    "members": "Members",
+    "profile": "Profile"
+  },
+  "leadership": {
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome",
+      "quickActions": "Quick actions",
+      "recentActivity": "Recent activity"
+    },
+    "callings": {
+      "title": "Callings",
+      "new": "New calling",
+      "empty": "No callings registered",
+      "status": {
+        "active": "Active",
+        "pending": "Pending",
+        "released": "Released"
+      }
+    },
+    "members": {
+      "title": "Members",
+      "search": "Search members",
+      "empty": "No members found"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "empty": "No scheduled events"
+    },
+    "notes": {
+      "title": "Notes",
+      "new": "New note",
+      "empty": "No notes"
+    },
+    "responsibilities": {
+      "title": "Responsibilities",
+      "empty": "No assigned responsibilities"
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "back": "Back",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm"
+  }
+}

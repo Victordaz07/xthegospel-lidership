@@ -1,0 +1,17 @@
+/**
+ * Stack Primitive Styles
+ * Minimal base styles - most styling comes from inline computed styles
+ */
+
+.ui-stack {
+  box-sizing: border-box;
+}
+
+/* Stack variants for semantic clarity in DevTools */
+.ui-stack--vertical {
+  /* Vertical stack */
+}
+
+.ui-stack--horizontal {
+  /* Horizontal stack */
+}

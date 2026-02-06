@@ -1,0 +1,32 @@
+/**
+ * PageContainer Styles
+ * Uses design system CSS variables
+ */
+
+.ui-page-container {
+  width: 100%;
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+  padding-top: var(--spacing-6);
+  padding-bottom: var(--spacing-10);
+  box-sizing: border-box;
+}
+
+/* Entrance animation */
+.ui-page-container--animate {
+  animation: ui-page-fade-in var(--transition-slow) ease-out;
+}
+
+@keyframes ui-page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

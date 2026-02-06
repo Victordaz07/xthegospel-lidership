@@ -1,0 +1,8 @@
+/**
+ * Flex Primitive Styles
+ * Minimal base styles - most styling comes from inline computed styles
+ */
+
+.ui-flex {
+  box-sizing: border-box;
+}

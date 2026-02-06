@@ -1,0 +1,39 @@
+/**
+ * SectionTitle Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-section-title-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.ui-section-title-left {
+  flex: 1;
+  min-width: 0; /* Allow text truncation */
+}
+
+.ui-section-title-heading {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin: 0;
+  line-height: var(--leading-tight);
+  font-family: var(--font-family-display);
+}
+
+.ui-section-title-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: var(--space-1) 0 0 0;
+  line-height: var(--leading-normal);
+}
+
+.ui-section-title-action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}

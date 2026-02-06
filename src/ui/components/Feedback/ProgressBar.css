@@ -1,0 +1,110 @@
+/**
+ * ProgressBar Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-progress-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+/* Container (track) */
+.ui-progress-bar__container {
+  flex: 1;
+  background: var(--color-neutral-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+/* Size variants */
+.ui-progress-bar--sm .ui-progress-bar__container {
+  height: 6px;
+}
+
+.ui-progress-bar--md .ui-progress-bar__container {
+  height: 12px;
+}
+
+.ui-progress-bar--lg .ui-progress-bar__container {
+  height: 20px;
+}
+
+/* Fill (progress) */
+.ui-progress-bar__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  min-width: 2px;
+}
+
+.ui-progress-bar__fill--animated {
+  transition: width var(--transition-slow);
+}
+
+/* Color variants */
+.ui-progress-bar__fill--primary {
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+}
+
+.ui-progress-bar__fill--secondary {
+  background: linear-gradient(
+    90deg,
+    var(--secondary) 0%,
+    var(--secondary-light) 100%
+  );
+}
+
+.ui-progress-bar__fill--accent {
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent-light) 100%
+  );
+}
+
+.ui-progress-bar__fill--success {
+  background: linear-gradient(
+    90deg,
+    var(--success) 0%,
+    var(--success-light) 100%
+  );
+}
+
+.ui-progress-bar__fill--warning {
+  background: linear-gradient(
+    90deg,
+    var(--warning) 0%,
+    var(--warning-light) 100%
+  );
+}
+
+.ui-progress-bar__fill--error {
+  background: linear-gradient(
+    90deg,
+    var(--danger) 0%,
+    var(--danger-light) 100%
+  );
+}
+
+.ui-progress-bar__fill--info {
+  background: linear-gradient(
+    90deg,
+    var(--info) 0%,
+    var(--info-light) 100%
+  );
+}
+
+/* Label */
+.ui-progress-bar__label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  min-width: 36px;
+  text-align: right;
+}

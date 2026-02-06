@@ -1,0 +1,37 @@
+/**
+ * TwoColumnLayout Styles
+ * Uses design system CSS variables
+ */
+
+.ui-two-column-layout {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ui-two-column-layout__left,
+.ui-two-column-layout__right {
+  min-width: 0; /* Prevent overflow */
+}
+
+/* Responsive: Stack on mobile */
+@media (max-width: 768px) {
+  .ui-two-column-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Reverse order on mobile */
+.ui-two-column-layout--reverse-mobile .ui-two-column-layout__left {
+  order: 0;
+}
+
+@media (max-width: 768px) {
+  .ui-two-column-layout--reverse-mobile .ui-two-column-layout__left {
+    order: 2;
+  }
+  
+  .ui-two-column-layout--reverse-mobile .ui-two-column-layout__right {
+    order: 1;
+  }
+}

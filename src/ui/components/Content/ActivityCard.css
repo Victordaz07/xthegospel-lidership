@@ -1,0 +1,31 @@
+.ui-activity-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  background: var(--color-background-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-3);
+  border: 1px solid var(--color-border-subtle);
+  transition: all var(--transition-base);
+}
+
+.ui-activity-card--clickable { cursor: pointer; }
+.ui-activity-card--clickable:hover { box-shadow: var(--shadow-sm); }
+.ui-activity-card--completed { opacity: 0.7; }
+.ui-activity-card--pending { border-left: 3px solid var(--color-accent-default); }
+
+.ui-activity-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--color-neutral-100);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.ui-activity-card__content { flex: 1; min-width: 0; }
+.ui-activity-card__title { margin: 0; font-size: var(--font-font-size-sm); font-weight: var(--font-font-weight-medium); color: var(--color-text-primary); }
+.ui-activity-card__description { margin: var(--spacing-1) 0 0; font-size: var(--font-font-size-xs); color: var(--color-text-secondary); }
+.ui-activity-card__time { font-size: var(--font-font-size-xs); color: var(--color-text-tertiary); white-space: nowrap; }

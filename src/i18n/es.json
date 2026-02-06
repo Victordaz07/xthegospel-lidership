@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "xTheGospel Leaders",
+    "loading": "Cargando..."
+  },
+  "roles": {
+    "leader": {
+      "title": "Líder",
+      "description": "Acceso a herramientas de liderazgo"
+    }
+  },
+  "nav": {
+    "home": "Inicio",
+    "callings": "Llamados",
+    "calendar": "Calendario",
+    "members": "Miembros",
+    "profile": "Perfil"
+  },
+  "leadership": {
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Bienvenido",
+      "quickActions": "Acciones rápidas",
+      "recentActivity": "Actividad reciente"
+    },
+    "callings": {
+      "title": "Llamamientos",
+      "new": "Nuevo llamamiento",
+      "empty": "No hay llamamientos registrados",
+      "status": {
+        "active": "Activo",
+        "pending": "Pendiente",
+        "released": "Relevado"
+      }
+    },
+    "members": {
+      "title": "Miembros",
+      "search": "Buscar miembros",
+      "empty": "No se encontraron miembros"
+    },
+    "calendar": {
+      "title": "Calendario",
+      "empty": "No hay eventos programados"
+    },
+    "notes": {
+      "title": "Notas",
+      "new": "Nueva nota",
+      "empty": "No hay notas"
+    },
+    "responsibilities": {
+      "title": "Responsabilidades",
+      "empty": "No hay responsabilidades asignadas"
+    }
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "back": "Volver",
+    "search": "Buscar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "confirm": "Confirmar"
+  }
+}

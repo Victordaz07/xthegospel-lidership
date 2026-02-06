@@ -1,0 +1,16 @@
+/**
+ * Divider Primitive Styles
+ * Visual separator using design system tokens
+ */
+
+.ui-divider {
+  flex-shrink: 0;
+}
+
+.ui-divider--horizontal {
+  /* Horizontal divider */
+}
+
+.ui-divider--vertical {
+  align-self: stretch;
+}

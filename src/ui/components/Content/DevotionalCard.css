@@ -1,0 +1,45 @@
+.ui-devotional-card {
+  background: linear-gradient(135deg, var(--color-primary-default) 0%, var(--color-primary-400) 100%);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-5);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+.ui-devotional-card--clickable { cursor: pointer; }
+.ui-devotional-card--clickable:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.ui-devotional-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-3);
+}
+
+.ui-devotional-card__icon { font-size: 24px; opacity: 0.9; }
+.ui-devotional-card__date { font-size: var(--font-font-size-xs); opacity: 0.8; }
+
+.ui-devotional-card__title {
+  margin: 0 0 var(--spacing-3);
+  font-size: var(--font-font-size-lg);
+  font-weight: var(--font-font-weight-semibold);
+  line-height: var(--font-line-height-snug);
+}
+
+.ui-devotional-card__scripture {
+  margin: 0;
+  padding: 0;
+  font-style: italic;
+  font-size: var(--font-font-size-sm);
+  line-height: var(--font-line-height-relaxed);
+  opacity: 0.95;
+}
+
+.ui-devotional-card__reference {
+  display: block;
+  font-style: normal;
+  font-size: var(--font-font-size-xs);
+  margin-top: var(--spacing-2);
+  opacity: 0.8;
+}

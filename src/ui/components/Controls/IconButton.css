@@ -1,0 +1,157 @@
+/**
+ * IconButton Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: 
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+/* ==================== SIZES ==================== */
+
+.ui-icon-button--sm {
+  width: 32px;
+  height: 32px;
+  font-size: var(--text-sm);
+}
+
+.ui-icon-button--md {
+  width: 42px;
+  height: 42px;
+  font-size: var(--text-base);
+}
+
+.ui-icon-button--lg {
+  width: 52px;
+  height: 52px;
+  font-size: var(--text-xl);
+}
+
+/* ==================== VARIANTS ==================== */
+
+/* Default - Soft background */
+.ui-icon-button--default {
+  background: var(--color-neutral-100);
+  color: var(--text-primary);
+}
+
+.ui-icon-button--default:hover:not(:disabled) {
+  background: var(--color-neutral-200);
+  transform: translateY(-1px);
+}
+
+.ui-icon-button--default:active:not(:disabled) {
+  transform: translateY(0);
+  background: var(--color-neutral-300);
+}
+
+/* Primary */
+.ui-icon-button--primary {
+  background: var(--primary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-icon-button--primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-primary);
+}
+
+.ui-icon-button--primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Accent */
+.ui-icon-button--accent {
+  background: var(--accent);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-icon-button--accent:hover:not(:disabled) {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-accent);
+}
+
+/* Ghost */
+.ui-icon-button--ghost {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.ui-icon-button--ghost:hover:not(:disabled) {
+  background: var(--color-neutral-100);
+}
+
+.ui-icon-button--ghost:active:not(:disabled) {
+  background: var(--color-neutral-200);
+}
+
+/* Destructive */
+.ui-icon-button--destructive {
+  background: var(--danger-light);
+  color: var(--danger-dark);
+}
+
+.ui-icon-button--destructive:hover:not(:disabled) {
+  background: var(--danger);
+  color: var(--text-inverse);
+}
+
+/* ==================== STATES ==================== */
+
+/* Disabled */
+.ui-icon-button--disabled,
+.ui-icon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Focus */
+.ui-icon-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Loading */
+.ui-icon-button--loading {
+  cursor: wait;
+}
+
+/* Spinner */
+.ui-icon-button-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-icon-button-spinner-icon {
+  width: 60%;
+  height: 60%;
+  animation: ui-icon-button-spin 1s linear infinite;
+}
+
+@keyframes ui-icon-button-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

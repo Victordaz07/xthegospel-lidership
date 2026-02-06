@@ -1,0 +1,8 @@
+/**
+ * Container Primitive Styles
+ * Responsive container with max-width constraints
+ */
+
+.ui-container {
+  box-sizing: border-box;
+}

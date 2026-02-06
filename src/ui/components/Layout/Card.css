@@ -1,0 +1,63 @@
+/**
+ * Card Component Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-card {
+  background-color: var(--background-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-base);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Elevated variant - more prominent shadow */
+.ui-card--elevated {
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+/* Outlined variant - border focus, no shadow */
+.ui-card--outlined {
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+/* Gradient variant - brand gradient background */
+.ui-card--gradient {
+  background: var(--theme-gradient);
+  color: var(--text-inverse);
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+/* Clickable state */
+.ui-card--clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.ui-card--clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.ui-card--clickable:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+}
+
+/* Focus state for accessibility */
+.ui-card--clickable:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Gradient clickable states */
+.ui-card--gradient.ui-card--clickable:hover {
+  box-shadow: var(--shadow-xl);
+  border-color: transparent;
+}

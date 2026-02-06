@@ -1,0 +1,74 @@
+/**
+ * BottomNav Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-2) var(--space-4);
+  padding-bottom: calc(var(--space-2) + env(safe-area-inset-bottom));
+  z-index: var(--z-fixed);
+}
+
+.ui-bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--text-tertiary);
+}
+
+.ui-bottom-nav__item:hover {
+  background: var(--color-neutral-100);
+  color: var(--text-secondary);
+}
+
+.ui-bottom-nav__item--active {
+  color: var(--primary);
+}
+
+.ui-bottom-nav__icon {
+  position: relative;
+  font-size: var(--icon-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-bottom-nav__badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--space-1);
+  background: var(--danger);
+  color: var(--text-inverse);
+  font-size: 10px;
+  font-weight: var(--font-bold);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-bottom-nav__label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+}

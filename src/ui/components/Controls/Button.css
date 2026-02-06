@@ -1,0 +1,221 @@
+/**
+ * Button Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: 
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+  position: relative;
+  white-space: nowrap;
+}
+
+/* ==================== SIZES ==================== */
+
+.ui-button--sm {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  min-height: 32px;
+}
+
+.ui-button--md {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  min-height: 40px;
+}
+
+.ui-button--lg {
+  padding: var(--space-4) var(--space-6);
+  font-size: var(--text-base);
+  min-height: 48px;
+}
+
+/* ==================== VARIANTS ==================== */
+
+/* Primary - Solid background */
+.ui-button--primary {
+  background: var(--primary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-button--primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-primary);
+}
+
+.ui-button--primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Secondary - Soft background */
+.ui-button--secondary {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary);
+  box-shadow: none;
+}
+
+.ui-button--secondary:hover:not(:disabled) {
+  background: rgba(var(--primary-rgb), 0.15);
+  transform: translateY(-1px);
+}
+
+.ui-button--secondary:active:not(:disabled) {
+  transform: translateY(0);
+  background: rgba(var(--primary-rgb), 0.2);
+}
+
+/* Ghost - Outlined */
+.ui-button--ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.ui-button--ghost:hover:not(:disabled) {
+  background: var(--background-muted);
+  border-color: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+.ui-button--ghost:active:not(:disabled) {
+  transform: translateY(0);
+  background: var(--color-neutral-100);
+}
+
+/* Accent - Gold/Brass */
+.ui-button--accent {
+  background: var(--accent);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-button--accent:hover:not(:disabled) {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-accent);
+}
+
+.ui-button--accent:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Destructive - Calm danger */
+.ui-button--destructive {
+  background: var(--danger-light);
+  color: var(--danger-dark);
+  border: 1px solid var(--danger);
+}
+
+.ui-button--destructive:hover:not(:disabled) {
+  background: var(--danger);
+  color: var(--text-inverse);
+  transform: translateY(-1px);
+}
+
+.ui-button--destructive:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Success */
+.ui-button--success {
+  background: var(--success);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-button--success:hover:not(:disabled) {
+  background: var(--success-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.ui-button--success:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* ==================== STATES ==================== */
+
+/* Full width */
+.ui-button--full-width {
+  width: 100%;
+}
+
+/* Disabled */
+.ui-button--disabled,
+.ui-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Focus */
+.ui-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Loading */
+.ui-button--loading {
+  cursor: wait;
+}
+
+.ui-button--loading .ui-button-label,
+.ui-button--loading .ui-button-icon {
+  opacity: 0;
+}
+
+/* ==================== ELEMENTS ==================== */
+
+.ui-button-icon {
+  display: flex;
+  align-items: center;
+  font-size: 1.15em;
+  flex-shrink: 0;
+}
+
+.ui-button-icon--right {
+  margin-left: var(--space-1);
+}
+
+.ui-button-label {
+  white-space: nowrap;
+}
+
+/* Spinner */
+.ui-button-spinner {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-button-spinner-icon {
+  width: 20px;
+  height: 20px;
+  animation: ui-button-spin 1s linear infinite;
+}
+
+@keyframes ui-button-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,36 @@
+/**
+ * Section Styles
+ * Updated to use new design system tokens
+ */
+
+.ui-section {
+  margin-bottom: var(--space-4);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ui-section-header {
+  margin-bottom: var(--space-4);
+}
+
+.ui-section-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-1) 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-neutral-100);
+  font-family: var(--font-family-display);
+}
+
+.ui-section-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: var(--leading-normal);
+}
+
+.ui-section-content {
+  display: flex;
+  flex-direction: column;
+}

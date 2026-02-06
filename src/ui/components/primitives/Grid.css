@@ -1,0 +1,8 @@
+/**
+ * Grid Primitive Styles
+ * Minimal base styles - most styling comes from inline computed styles
+ */
+
+.ui-grid {
+  box-sizing: border-box;
+}

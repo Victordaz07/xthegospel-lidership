@@ -1,0 +1,71 @@
+/**
+ * Mock Calendar Events Data for Development
+ */
+
+import { CallingEvent } from '../types';
+
+export const mockCallingEvents: CallingEvent[] = [
+  {
+    id: 'event-1',
+    title: 'Entrevista: Ana López',
+    description: 'Entrevista para llamamiento de consejera de Mujeres Jóvenes.',
+    kind: 'interview',
+    date: '2026-01-27',
+    time: '18:00',
+    location: 'Oficina del obispo',
+    memberId: 'member-3',
+    organization: 'young_women',
+    createdAt: '2026-01-22T10:00:00Z',
+    updatedAt: '2026-01-22T10:00:00Z',
+  },
+  {
+    id: 'event-2',
+    title: 'Consejo de barrio',
+    description: 'Reunión mensual del consejo de barrio.',
+    kind: 'meeting',
+    date: '2026-01-27',
+    time: '19:00',
+    endTime: '20:30',
+    location: 'Sala de consejo',
+    createdAt: '2026-01-01T10:00:00Z',
+    updatedAt: '2026-01-01T10:00:00Z',
+  },
+  {
+    id: 'event-3',
+    title: 'Capacitación: Juan Pérez',
+    description: 'Capacitación para nuevo maestro de Escuela Dominical.',
+    kind: 'training',
+    date: '2026-01-28',
+    time: '19:00',
+    location: 'Aula 2',
+    callingId: 'calling-2',
+    memberId: 'member-2',
+    organization: 'sunday_school',
+    createdAt: '2026-01-20T10:00:00Z',
+    updatedAt: '2026-01-20T10:00:00Z',
+  },
+  {
+    id: 'event-4',
+    title: 'Reuniones dominicales',
+    kind: 'meeting',
+    date: '2026-01-26',
+    time: '10:00',
+    endTime: '12:00',
+    location: 'Centro de reuniones',
+    createdAt: '2026-01-01T10:00:00Z',
+    updatedAt: '2026-01-01T10:00:00Z',
+  },
+  {
+    id: 'event-5',
+    title: 'Seguimiento: María García',
+    description: 'Seguimiento mensual con la presidenta de Sociedad de Socorro.',
+    kind: 'followup',
+    date: '2026-02-05',
+    time: '17:30',
+    callingId: 'calling-1',
+    memberId: 'member-1',
+    organization: 'relief_society',
+    createdAt: '2026-01-24T10:00:00Z',
+    updatedAt: '2026-01-24T10:00:00Z',
+  },
+];
