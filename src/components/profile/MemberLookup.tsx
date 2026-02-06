@@ -5,8 +5,8 @@
  * xTheGospel ID for ward registration and verification.
  */
 
-import React, { useState } from 'react';
-import { FaSearch, FaSpinner, FaCheck, FaUserCheck, FaXmark } from 'react-icons/fa6';
+import React, { useState, useEffect } from 'react';
+import { FaMagnifyingGlass, FaSpinner, FaCheck, FaUserCheck, FaXmark } from 'react-icons/fa6';
 import { getProfileByXtgId, verifyProfile } from '../../services/firebase/userService';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { UniversalUserProfile, MemberStatus } from '../../types/user';
@@ -16,6 +16,7 @@ import './MemberLookup.css';
 interface MemberLookupProps {
   onMemberFound?: (profile: UniversalUserProfile) => void;
   onVerify?: (profile: UniversalUserProfile) => void;
+  initialId?: string | null; // Pre-fill and auto-search
 }
 
 const STATUS_LABELS: Record<MemberStatus, string> = {
@@ -26,17 +27,28 @@ const STATUS_LABELS: Record<MemberStatus, string> = {
   returned: 'Misionero Retornado',
 };
 
-export function MemberLookup({ onMemberFound, onVerify }: MemberLookupProps): JSX.Element {
+export function MemberLookup({ onMemberFound, onVerify, initialId }: MemberLookupProps): JSX.Element {
   const { profile: leaderProfile } = useUserProfile('leader');
-  const [searchId, setSearchId] = useState('');
+  const [searchId, setSearchId] = useState(initialId || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [foundProfile, setFoundProfile] = useState<UniversalUserProfile | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [verified, setVerified] = useState(false);
 
-  const handleSearch = async () => {
-    if (!searchId.trim()) return;
+  // Auto-search when initialId is provided (e.g., from QR scanner)
+  useEffect(() => {
+    if (initialId && initialId !== searchId) {
+      setSearchId(initialId);
+      // Trigger search after state update
+      setTimeout(() => {
+        performSearch(initialId);
+      }, 100);
+    }
+  }, [initialId]);
+
+  const performSearch = async (idToSearch: string) => {
+    if (!idToSearch.trim()) return;
 
     setLoading(true);
     setError(null);
@@ -44,8 +56,7 @@ export function MemberLookup({ onMemberFound, onVerify }: MemberLookupProps): JS
     setVerified(false);
 
     try {
-      // Format the ID if needed (add XTG- prefix if missing)
-      let formattedId = searchId.trim().toUpperCase();
+      let formattedId = idToSearch.trim().toUpperCase();
       if (!formattedId.startsWith('XTG-')) {
         formattedId = `XTG-${formattedId}`;
       }
@@ -63,6 +74,10 @@ export function MemberLookup({ onMemberFound, onVerify }: MemberLookupProps): JS
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = async () => {
+    await performSearch(searchId);
   };
 
   const handleVerify = async () => {
@@ -112,7 +127,7 @@ export function MemberLookup({ onMemberFound, onVerify }: MemberLookupProps): JS
       {/* Search Input */}
       <div className="member-lookup__search">
         <div className="member-lookup__input-wrapper">
-          <FaSearch className="member-lookup__input-icon" />
+          <FaMagnifyingGlass className="member-lookup__input-icon" />
           <input
             type="text"
             className="member-lookup__input"

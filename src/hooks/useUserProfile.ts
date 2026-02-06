@@ -6,7 +6,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '../state/auth/useAuthStore';
-import { getProfileByUid, getOrCreateProfile, getProfileByXtgId } from '../services/firebase/userService';
+import { getProfileByUid, getOrCreateProfile, getProfileByXtgId, getAllRegisteredMembers } from '../services/firebase/userService';
 import { UniversalUserProfile, XtgAppKey } from '../types/user';
 
 interface UseUserProfileResult {
@@ -103,6 +103,41 @@ export function useProfileByXtgId(xthegospelId: string | null): UseUserProfileRe
     loading,
     error,
     refetch: fetchProfile,
+  };
+}
+
+/**
+ * Hook to get all registered members (for leaders)
+ */
+export function useRegisteredMembers(limit: number = 50) {
+  const [members, setMembers] = useState<UniversalUserProfile[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchMembers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const profiles = await getAllRegisteredMembers(limit);
+      setMembers(profiles);
+    } catch (err: any) {
+      console.error('Error fetching members:', err);
+      setError(err.message || 'Failed to load members');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchMembers();
+  }, [limit]);
+
+  return {
+    members,
+    loading,
+    error,
+    refetch: fetchMembers,
   };
 }
 

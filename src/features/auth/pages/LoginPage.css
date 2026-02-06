@@ -151,31 +151,38 @@
   border-top: 1px solid #E5E7EB;
 }
 
-.toggle-text {
-  font-size: 14px;
-  color: #64748b;
-  margin: 0 0 8px 0;
+.login-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  padding: 12px 16px;
+  background: #F0F4F8;
+  border-radius: 10px;
+  margin-bottom: 12px;
 }
 
-.toggle-button {
-  background: none;
-  border: none;
+.info-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.info-text {
+  font-size: 13px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.info-text strong {
   color: #1F3A5F;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 4px 8px;
-  transition: color 200ms ease;
 }
 
-.toggle-button:hover:not(:disabled) {
-  color: #355E9B;
-  text-decoration: underline;
-}
-
-.toggle-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.info-subtext {
+  font-size: 12px;
+  color: #94A3B8;
+  margin: 0;
 }
 
 /* Responsive */

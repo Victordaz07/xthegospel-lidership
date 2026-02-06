@@ -5,3 +5,4 @@
 
 export { XtgProfileCard } from './XtgProfileCard';
 export { MemberLookup } from './MemberLookup';
+export { QRScanner } from './QRScanner';

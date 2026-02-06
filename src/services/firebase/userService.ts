@@ -404,3 +404,65 @@ export async function getWardMembers(
     return [];
   }
 }
+
+/**
+ * Get all registered members (for development/testing)
+ * In production, this should be scoped to a ward/stake
+ */
+export async function getAllRegisteredMembers(
+  limit: number = 50
+): Promise<UniversalUserProfile[]> {
+  try {
+    const { collection, query, getDocs, orderBy, limit: queryLimit } = await import('firebase/firestore');
+    const db = getFirebaseDb();
+    
+    const usersRef = collection(db, 'users');
+    const q = query(
+      usersRef,
+      orderBy('createdAt', 'desc'),
+      queryLimit(limit)
+    );
+    
+    const querySnapshot = await getDocs(q);
+    const results: UniversalUserProfile[] = [];
+    
+    querySnapshot.forEach((docSnap) => {
+      results.push(docSnap.data() as UniversalUserProfile);
+    });
+    
+    console.log(`📋 Found ${results.length} registered members`);
+    return results;
+  } catch (error) {
+    console.error('Error getting all members:', error);
+    return [];
+  }
+}
+
+/**
+ * Add a member to a ward
+ */
+export async function addMemberToWard(
+  uid: string, 
+  wardId: string, 
+  wardName: string,
+  stakeId?: string,
+  stakeName?: string
+): Promise<void> {
+  try {
+    const db = getFirebaseDb();
+    const userRef = doc(db, 'users', uid);
+    
+    await updateDoc(userRef, {
+      'unit.wardId': wardId,
+      'unit.wardName': wardName,
+      'unit.stakeId': stakeId || null,
+      'unit.stakeName': stakeName || null,
+      updatedAt: serverTimestamp(),
+    });
+    
+    console.log(`✅ Added user ${uid} to ward ${wardName}`);
+  } catch (error) {
+    console.error('Error adding member to ward:', error);
+    throw error;
+  }
+}

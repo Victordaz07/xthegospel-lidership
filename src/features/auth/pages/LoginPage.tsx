@@ -1,8 +1,8 @@
 /**
  * Login Page
  * 
- * Authentication page with login and registration forms.
- * Clean, minimal design following the app's reverent aesthetic.
+ * Authentication page with login only (no registration).
+ * Accounts must be created in the members app first.
  */
 
 import React, { useState } from 'react';
@@ -10,16 +10,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import './LoginPage.css';
 
-type AuthMode = 'login' | 'register';
-
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { login, register, isLoading, error, clearError, isAuthenticated } = useAuth();
+  const { login, isLoading, error, clearError, isAuthenticated } = useAuth();
   
-  const [mode, setMode] = useState<AuthMode>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);
 
   // Redirect if already authenticated
@@ -40,34 +36,12 @@ const LoginPage: React.FC = () => {
       return;
     }
 
-    if (mode === 'register') {
-      if (password !== confirmPassword) {
-        setLocalError('Las contraseñas no coinciden');
-        return;
-      }
-      if (password.length < 6) {
-        setLocalError('La contraseña debe tener al menos 6 caracteres');
-        return;
-      }
-    }
-
     try {
-      if (mode === 'login') {
-        await login(email, password);
-      } else {
-        await register(email, password);
-      }
+      await login(email, password);
       // Navigation happens automatically via useEffect when isAuthenticated changes
     } catch (err) {
       // Error is already set in context
     }
-  };
-
-  const toggleMode = () => {
-    setMode(mode === 'login' ? 'register' : 'login');
-    setLocalError(null);
-    clearError();
-    setConfirmPassword('');
   };
 
   const displayError = localError || error;
@@ -113,28 +87,10 @@ const LoginPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+              autoComplete="current-password"
               disabled={isLoading}
             />
           </div>
-
-          {mode === 'register' && (
-            <div className="form-group">
-              <label htmlFor="confirmPassword" className="form-label">
-                Confirmar contraseña
-              </label>
-              <input
-                id="confirmPassword"
-                type="password"
-                className="form-input"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="••••••••"
-                autoComplete="new-password"
-                disabled={isLoading}
-              />
-            </div>
-          )}
 
           {displayError && (
             <div className="form-error">
@@ -149,27 +105,24 @@ const LoginPage: React.FC = () => {
           >
             {isLoading ? (
               <span className="loading-spinner">⏳</span>
-            ) : mode === 'login' ? (
-              'Iniciar sesión'
             ) : (
-              'Crear cuenta'
+              'Iniciar sesión'
             )}
           </button>
         </form>
 
-        {/* Toggle Mode */}
+        {/* Info Message */}
         <div className="login-footer">
-          <p className="toggle-text">
-            {mode === 'login' ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}
+          <div className="login-info">
+            <span className="info-icon">ℹ️</span>
+            <p className="info-text">
+              Usa la misma cuenta que creaste en la app de miembros
+              <strong> xTheGospel</strong>
+            </p>
+          </div>
+          <p className="info-subtext">
+            ¿No tienes cuenta? Descarga la app de miembros para registrarte.
           </p>
-          <button
-            type="button"
-            className="toggle-button"
-            onClick={toggleMode}
-            disabled={isLoading}
-          >
-            {mode === 'login' ? 'Crear cuenta' : 'Iniciar sesión'}
-          </button>
         </div>
       </div>
     </div>

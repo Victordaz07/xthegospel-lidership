@@ -1,0 +1,246 @@
+/**
+ * QRScanner Styles
+ */
+
+.qr-scanner {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.qr-scanner__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(58, 95, 138, 0.1);
+}
+
+.qr-scanner__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a2e);
+  margin: 0;
+}
+
+.qr-scanner__close {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.qr-scanner__close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #1a1a2e;
+}
+
+/* Tabs */
+.qr-scanner__tabs {
+  display: flex;
+  padding: 16px 24px;
+  gap: 8px;
+  background: #f8f9fa;
+}
+
+.qr-scanner__tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.qr-scanner__tab:hover:not(:disabled) {
+  background: #ffffff;
+  color: #3A5F8A;
+}
+
+.qr-scanner__tab--active {
+  background: #ffffff;
+  border-color: #3A5F8A;
+  color: #3A5F8A;
+  box-shadow: 0 2px 8px rgba(58, 95, 138, 0.15);
+}
+
+.qr-scanner__tab:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.qr-scanner__spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error */
+.qr-scanner__error {
+  margin: 16px 24px 0;
+  padding: 12px 16px;
+  background: #F5E8E6;
+  border: 1px solid #C45C4A;
+  border-radius: 10px;
+  color: #9A3D2E;
+  font-size: 13px;
+}
+
+/* Manual Input */
+.qr-scanner__manual {
+  padding: 24px;
+}
+
+.qr-scanner__instruction {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+.qr-scanner__input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.qr-scanner__input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid rgba(58, 95, 138, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: #3A5F8A;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.qr-scanner__input::placeholder {
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.qr-scanner__input:focus {
+  outline: none;
+  border-color: #3A5F8A;
+  box-shadow: 0 0 0 4px rgba(58, 95, 138, 0.1);
+}
+
+.qr-scanner__paste-btn {
+  padding: 14px 18px;
+  background: #f1f5f9;
+  border: 2px solid rgba(58, 95, 138, 0.2);
+  border-radius: 12px;
+  color: #3A5F8A;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.qr-scanner__paste-btn:hover {
+  background: #e2e8f0;
+  border-color: #3A5F8A;
+}
+
+.qr-scanner__submit {
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #3A5F8A 0%, #2A4A6B 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.qr-scanner__submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(58, 95, 138, 0.3);
+}
+
+.qr-scanner__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Camera */
+.qr-scanner__camera {
+  padding: 24px;
+}
+
+.qr-scanner__video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.qr-scanner__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.qr-scanner__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.qr-scanner__frame {
+  width: 70%;
+  height: 70%;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+}
+
+.qr-scanner__camera-hint {
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+  margin: 16px 0;
+}
+
+.qr-scanner__camera-fallback {
+  text-align: center;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.qr-scanner__camera-fallback button {
+  background: none;
+  border: none;
+  color: #3A5F8A;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .qr-scanner__tabs {
+    flex-direction: column;
+  }
+}
