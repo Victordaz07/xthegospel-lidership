@@ -2,9 +2,10 @@
  * Role Configuration for Leaders App
  * 
  * Simplified role system for ward/stake leaders.
+ * Roles are now managed through AuthContext.
  */
 
-export type UserRoleKey = 'leader';
+export type UserRoleKey = 'leader' | 'member';
 
 export const ROLE_DEFINITIONS: Record<UserRoleKey, {
   id: UserRoleKey;
@@ -18,20 +19,15 @@ export const ROLE_DEFINITIONS: Record<UserRoleKey, {
     icon: '👔',
     defaultRoute: '/',
   },
+  member: {
+    id: 'member',
+    i18nKey: 'roles.member.title',
+    icon: '👤',
+    defaultRoute: '/',
+  },
 };
 
-export const ALL_ROLES: UserRoleKey[] = ['leader'];
-
-export function normalizeStoredRole(value: string | null): UserRoleKey | null {
-  if (!value) return null;
-  const normalized = value.toLowerCase().trim();
-  
-  if (normalized === 'leader') {
-    return 'leader';
-  }
-  
-  return null;
-}
+export const ALL_ROLES: UserRoleKey[] = ['leader', 'member'];
 
 export function isValidRole(value: string | null): value is UserRoleKey {
   return value !== null && ALL_ROLES.includes(value as UserRoleKey);

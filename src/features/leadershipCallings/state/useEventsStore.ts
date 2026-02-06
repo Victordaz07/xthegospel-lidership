@@ -8,6 +8,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { CallingEvent, CallingEventFormData, EventKind } from '../types';
 import { mockCallingEvents } from '../data';
+import { getInitialData } from '../../../config/environment';
 
 const STORAGE_KEY = 'xtg_leadership_events_v1';
 
@@ -39,7 +40,7 @@ interface EventsState {
 export const useEventsStore = create<EventsState>()(
   persist(
     (set, get) => ({
-      events: mockCallingEvents,
+      events: getInitialData(mockCallingEvents),
       isHydrated: false,
       
       addEvent: (data: CallingEventFormData) => {

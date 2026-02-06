@@ -8,6 +8,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Calling, CallingFormData, CallingStatus } from '../types';
 import { mockCallings } from '../data';
+import { getInitialData } from '../../../config/environment';
 
 const STORAGE_KEY = 'xtg_leadership_callings_v1';
 
@@ -36,7 +37,7 @@ interface CallingsState {
 export const useCallingsStore = create<CallingsState>()(
   persist(
     (set, get) => ({
-      callings: mockCallings, // Start with mock data for development
+      callings: getInitialData(mockCallings), // Only mock data in development
       isHydrated: false,
       
       addCalling: (data: CallingFormData) => {

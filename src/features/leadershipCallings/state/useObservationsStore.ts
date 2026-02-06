@@ -9,6 +9,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Observation, ObservationFormData } from '../types';
 import { mockObservations } from '../data';
+import { getInitialData } from '../../../config/environment';
 
 const STORAGE_KEY = 'xtg_leadership_observations_v1';
 
@@ -31,7 +32,7 @@ interface ObservationsState {
 export const useObservationsStore = create<ObservationsState>()(
   persist(
     (set, get) => ({
-      observations: mockObservations,
+      observations: getInitialData(mockObservations),
       isHydrated: false,
       
       addObservation: (data: ObservationFormData) => {

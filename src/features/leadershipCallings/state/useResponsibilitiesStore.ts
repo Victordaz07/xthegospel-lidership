@@ -8,6 +8,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Responsibility, ResponsibilityFormData, ResponsibilityStatus } from '../types';
 import { mockResponsibilities } from '../data';
+import { getInitialData } from '../../../config/environment';
 
 const STORAGE_KEY = 'xtg_leadership_responsibilities_v1';
 
@@ -35,7 +36,7 @@ interface ResponsibilitiesState {
 export const useResponsibilitiesStore = create<ResponsibilitiesState>()(
   persist(
     (set, get) => ({
-      responsibilities: mockResponsibilities,
+      responsibilities: getInitialData(mockResponsibilities),
       isHydrated: false,
       
       addResponsibility: (data: ResponsibilityFormData) => {

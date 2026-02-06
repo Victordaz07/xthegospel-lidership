@@ -24,6 +24,9 @@ import {
   NotesHubPage,
 } from '../features/leadershipCallings/pages';
 
+// Import profile page
+import { ProfilePage } from '../features/auth';
+
 // Import CSS
 import '../features/leadershipCallings/pages/LeadershipPages.css';
 
@@ -51,7 +54,7 @@ const LeadershipCallingsRoutes: React.FC = () => {
         <Route path="notes" element={<NotesHubPage />} />
         
         {/* Profile */}
-        <Route path="profile" element={<div>Perfil del Líder</div>} />
+        <Route path="profile" element={<ProfilePage />} />
         
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,0 +1,154 @@
+/**
+ * Profile Page Styles
+ */
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 32px;
+}
+
+/* Profile Card */
+.profile-card {
+  text-align: center;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1F3A5F 0%, #2C4F83 100%);
+  color: #FFFFFF;
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(31, 58, 95, 0.3);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--am-color-text-main, #1C2430);
+  margin: 0;
+}
+
+.profile-email {
+  font-size: 14px;
+  color: var(--am-color-text-muted, #64748b);
+  margin: 0;
+}
+
+.profile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #F0F3F8;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #1F3A5F;
+}
+
+.badge-icon {
+  font-size: 16px;
+}
+
+.badge-text {
+  font-weight: 500;
+}
+
+/* Section */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Menu Card */
+.profile-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.menu-icon {
+  font-size: 20px;
+  width: 32px;
+  text-align: center;
+}
+
+.menu-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-label {
+  font-size: 13px;
+  color: var(--am-color-text-muted, #64748b);
+}
+
+.menu-value {
+  font-size: 15px;
+  color: var(--am-color-text-main, #1C2430);
+  font-weight: 500;
+}
+
+.menu-value-mono {
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+}
+
+.menu-divider {
+  height: 1px;
+  background: var(--am-color-border-soft, #E5E7EB);
+  margin: 8px 0;
+}
+
+/* Actions */
+.profile-actions {
+  margin-top: 8px;
+}
+
+/* Footer */
+.profile-footer {
+  text-align: center;
+  padding-top: 16px;
+}
+
+.footer-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--am-color-text-main, #1C2430);
+  margin: 0 0 4px 0;
+}
+
+.footer-subtext {
+  font-size: 12px;
+  color: var(--am-color-text-muted, #64748b);
+  margin: 0;
+}

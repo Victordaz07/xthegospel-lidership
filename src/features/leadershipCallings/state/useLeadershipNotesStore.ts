@@ -8,6 +8,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { LeadershipNote, LeadershipNoteFormData, NoteScope, NoteType } from '../types';
 import { mockLeadershipNotes } from '../data';
+import { getInitialData } from '../../../config/environment';
 
 const STORAGE_KEY = 'xtg_leadership_notes_v1';
 
@@ -35,7 +36,7 @@ interface LeadershipNotesState {
 export const useLeadershipNotesStore = create<LeadershipNotesState>()(
   persist(
     (set, get) => ({
-      notes: mockLeadershipNotes,
+      notes: getInitialData(mockLeadershipNotes),
       isHydrated: false,
       
       addNote: (data: LeadershipNoteFormData) => {

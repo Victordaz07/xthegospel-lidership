@@ -1,22 +1,40 @@
-// Servicio de almacenamiento web usando localStorage
+/**
+ * Storage Service
+ * 
+ * Simple localStorage wrapper for web.
+ */
+
 export const StorageService = {
-  getItem: (key: string): string | null => {
-    if (typeof window === 'undefined') return null;
-    return localStorage.getItem(key);
+  getItem(key: string): string | null {
+    try {
+      return localStorage.getItem(key);
+    } catch (error) {
+      console.error('Error reading from localStorage:', error);
+      return null;
+    }
   },
 
-  setItem: (key: string, value: string): void => {
-    if (typeof window === 'undefined') return;
-    localStorage.setItem(key, value);
+  setItem(key: string, value: string): void {
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {
+      console.error('Error writing to localStorage:', error);
+    }
   },
 
-  removeItem: (key: string): void => {
-    if (typeof window === 'undefined') return;
-    localStorage.removeItem(key);
+  removeItem(key: string): void {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.error('Error removing from localStorage:', error);
+    }
   },
 
-  clear: (): void => {
-    if (typeof window === 'undefined') return;
-    localStorage.clear();
+  clear(): void {
+    try {
+      localStorage.clear();
+    } catch (error) {
+      console.error('Error clearing localStorage:', error);
+    }
   },
 };
