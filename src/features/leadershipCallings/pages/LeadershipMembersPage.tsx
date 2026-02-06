@@ -7,18 +7,19 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUsers, FaMagnifyingGlass, FaQrcode, FaUserPlus, FaDatabase, FaSpinner, FaRotate } from 'react-icons/fa6';
+import { FaUsers, FaMagnifyingGlass, FaQrcode, FaUserPlus, FaDatabase, FaSpinner, FaRotate, FaChurch } from 'react-icons/fa6';
 import { useCallingsStore } from '../state';
 import { PageShell, Card } from '../../../ui';
 import { MemberLookup, QRScanner } from '../../../components/profile';
+import { WardCodeGenerator } from '../../../components/ward';
 import { UniversalUserProfile, MemberStatus } from '../../../types/user';
 import { useRegisteredMembers } from '../../../hooks/useUserProfile';
 import { seedTestProfiles, getTestIds } from '../../../utils/seedTestData';
 import './LeadershipMembersPage.css';
 
-// Member status labels
+// Member status labels - "investigator" shows as "Amigo" per church terminology
 const STATUS_LABELS: Record<MemberStatus, string> = {
-  investigator: 'Investigador',
+  investigator: 'Amigo',
   new_convert: 'Nuevo Converso',
   active: 'Miembro',
   less_active: 'Miembro',

@@ -19,8 +19,9 @@ interface MemberLookupProps {
   initialId?: string | null; // Pre-fill and auto-search
 }
 
+// "investigator" shows as "Amigo" per church terminology
 const STATUS_LABELS: Record<MemberStatus, string> = {
-  investigator: 'Investigador',
+  investigator: 'Amigo',
   new_convert: 'Nuevo Converso',
   active: 'Miembro Activo',
   less_active: 'Miembro',

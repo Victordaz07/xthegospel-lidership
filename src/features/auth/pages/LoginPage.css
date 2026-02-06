@@ -185,6 +185,16 @@
   margin: 0;
 }
 
+.info-link {
+  color: #1F3A5F;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.info-link:hover {
+  text-decoration: underline;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
   .login-page {

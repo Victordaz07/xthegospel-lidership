@@ -16,8 +16,9 @@ interface XtgProfileCardProps {
   onShare?: () => void;
 }
 
+// "investigator" shows as "Amigo" per church terminology
 const STATUS_LABELS: Record<MemberStatus, string> = {
-  investigator: 'Investigador',
+  investigator: 'Amigo',
   new_convert: 'Nuevo Converso',
   active: 'Miembro Activo',
   less_active: 'Miembro',
@@ -25,7 +26,7 @@ const STATUS_LABELS: Record<MemberStatus, string> = {
 };
 
 const STATUS_COLORS: Record<MemberStatus, string> = {
-  investigator: 'brass',
+  investigator: 'friend',
   new_convert: 'success',
   active: 'primary',
   less_active: 'neutral',

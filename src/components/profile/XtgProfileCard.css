@@ -42,6 +42,11 @@
   color: #8C6340;
 }
 
+.xtg-card__badge[data-status="friend"] {
+  background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+  color: #065F46;
+}
+
 .xtg-card__badge[data-status="success"] {
   background: linear-gradient(135deg, #E5EEF0, #C5D9DB);
   color: #2F5A66;

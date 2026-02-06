@@ -121,7 +121,11 @@ const LoginPage: React.FC = () => {
             </p>
           </div>
           <p className="info-subtext">
-            ¿No tienes cuenta? Descarga la app de miembros para registrarte.
+            ¿No tienes cuenta? Visita{' '}
+            <a href="https://xthegospel.com" target="_blank" rel="noopener noreferrer" className="info-link">
+              xthegospel.com
+            </a>
+            {' '}para más información.
           </p>
         </div>
       </div>
