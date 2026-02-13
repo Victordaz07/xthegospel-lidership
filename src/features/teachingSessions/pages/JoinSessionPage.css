@@ -1,0 +1,37 @@
+.join-session-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.join-session-page h2 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  color: var(--am-color-text-main, #0f172a);
+}
+
+.join-session-page p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: var(--am-color-text-muted, #64748b);
+}
+
+.join-session-title {
+  font-weight: 600;
+  color: var(--am-color-text-main, #0f172a) !important;
+}
+
+.join-session-code {
+  font-family: monospace;
+  letter-spacing: 1px;
+  font-size: 16px !important;
+}
+
+.join-session-hint {
+  font-size: 12px !important;
+  word-break: break-all;
+}

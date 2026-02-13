@@ -13,6 +13,7 @@ import {
   FaHouse,
   FaUser,
   FaUserCheck,
+  FaChalkboardUser,
   FaCalendarDays,
   FaUsers,
 } from 'react-icons/fa6';
@@ -22,6 +23,7 @@ import './LeadershipCallingsLayout.css';
 const LEADERSHIP_NAV_ITEMS: BottomNavItem[] = [
   { id: 'home', label: 'Inicio', icon: <FaHouse /> },
   { id: 'callings', label: 'Llamados', icon: <FaUserCheck /> },
+  { id: 'teaching', label: 'Enseñando', icon: <FaChalkboardUser /> },
   { id: 'calendar', label: 'Calendario', icon: <FaCalendarDays /> },
   { id: 'members', label: 'Miembros', icon: <FaUsers /> },
   { id: 'profile', label: 'Perfil', icon: <FaUser /> },
@@ -30,6 +32,8 @@ const LEADERSHIP_NAV_ITEMS: BottomNavItem[] = [
 function pathnameToActiveId(pathname: string): string {
   if (pathname.startsWith('/profile')) return 'profile';
   if (pathname.startsWith('/callings')) return 'callings';
+  if (pathname.startsWith('/bishop/teaching')) return 'teaching';
+  if (pathname.startsWith('/teaching')) return 'teaching';
   if (pathname.startsWith('/calendar')) return 'calendar';
   if (pathname.startsWith('/members')) return 'members';
   return 'home';
@@ -49,6 +53,10 @@ export default function LeadershipCallingsLayout({
   const handleSelect = (id: string) => {
     if (id === 'home') {
       navigate('/');
+      return;
+    }
+    if (id === 'teaching') {
+      navigate('/teaching');
       return;
     }
     navigate(`/${id}`);

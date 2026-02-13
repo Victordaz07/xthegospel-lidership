@@ -9,6 +9,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCallingsStore } from '../state';
+import { useUserRoleStore } from '../../../state/user/useUserRoleStore';
 import { STATUS_LABELS, ORGANIZATION_LABELS } from '../types';
 import { PageShell, SectionTitle, Card, Button, EmptyState } from '../../../ui';
 import './LeadershipPages.css';
@@ -16,6 +17,7 @@ import './LeadershipPages.css';
 const LeadershipDashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const callings = useCallingsStore(s => s.callings);
+  const isBishopric = useUserRoleStore((s) => s.isBishopric);
 
   // Simple counts (not metrics)
   const activeCallings = callings.filter(
@@ -123,6 +125,22 @@ const LeadershipDashboardPage: React.FC = () => {
           >
             📋 Ver todos los llamamientos
           </Button>
+          <Button
+            variant="secondary"
+            fullWidth
+            onClick={() => navigate('/teaching')}
+          >
+            📖 Enseñando — preparar clases
+          </Button>
+          {isBishopric() && (
+            <Button
+              variant="secondary"
+              fullWidth
+              onClick={() => navigate('/bishop/teaching')}
+            >
+              📊 Clases del barrio (obispado)
+            </Button>
+          )}
           <Button
             variant="secondary"
             fullWidth

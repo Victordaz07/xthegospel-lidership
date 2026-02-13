@@ -43,12 +43,12 @@ function getFirebaseConfig(): FirebaseConfig {
   }
 
   return {
-    apiKey,
-    authDomain,
-    projectId,
-    storageBucket,
-    messagingSenderId,
-    appId,
+    apiKey: apiKey as string,
+    authDomain: authDomain as string,
+    projectId: projectId as string,
+    storageBucket: storageBucket as string,
+    messagingSenderId: messagingSenderId as string,
+    appId: appId as string,
   };
 }
 

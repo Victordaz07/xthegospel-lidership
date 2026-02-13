@@ -12,6 +12,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 // Auth pages
 import { LoginPage, RoleSelectionPage } from '../features/auth';
 
+// Join + Participant live view (public / auth only - no ward/role required)
+import { JoinSessionPage, SessionParticipantLiveView } from '../features/teachingSessions/pages';
+
 // Ward pages
 import { WardSetupPage } from '../features/ward';
 
@@ -26,6 +29,15 @@ const AppRouter: React.FC = () => {
     <Routes>
       {/* Public routes */}
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/join" element={<JoinSessionPage />} />
+      <Route
+        path="/session/:wardId/:sessionId/live"
+        element={
+          <ProtectedRoute>
+            <SessionParticipantLiveView />
+          </ProtectedRoute>
+        }
+      />
       
       {/* Role selection (requires auth but not role) */}
       <Route

@@ -27,6 +27,18 @@ import {
 // Import profile page
 import { ProfilePage } from '../features/auth';
 
+// Import teaching sessions
+import {
+  TeachingSessionsListPage,
+  SessionCreatePage,
+  SessionDetailPage,
+  SessionLivePage,
+  SessionReportPage,
+  BishopTeachingDashboard,
+  TeachingAnalyticsPage,
+} from '../features/teachingSessions/pages';
+import BishopricRequiredRoute from './BishopricRequiredRoute';
+
 // Import CSS
 import '../features/leadershipCallings/pages/LeadershipPages.css';
 
@@ -41,6 +53,18 @@ const LeadershipCallingsRoutes: React.FC = () => {
         <Route path="callings" element={<LeadershipCallingsPage />} />
         <Route path="callings/new" element={<NewCallingPage />} />
         <Route path="callings/:id" element={<CallingDetailPage />} />
+        
+        {/* Teaching Sessions */}
+        <Route path="teaching" element={<TeachingSessionsListPage />} />
+        <Route path="teaching/new" element={<SessionCreatePage />} />
+        <Route path="teaching/:sessionId" element={<SessionDetailPage />} />
+        <Route path="teaching/:sessionId/live" element={<SessionLivePage />} />
+        <Route path="teaching/:sessionId/report" element={<SessionReportPage />} />
+        
+        {/* Bishopric - Teaching oversight */}
+        <Route path="bishop/teaching" element={<BishopricRequiredRoute><BishopTeachingDashboard /></BishopricRequiredRoute>} />
+        <Route path="bishop/teaching/analytics" element={<BishopricRequiredRoute><TeachingAnalyticsPage /></BishopricRequiredRoute>} />
+        <Route path="bishop/teaching/:sessionId/report" element={<BishopricRequiredRoute><SessionReportPage /></BishopricRequiredRoute>} />
         
         {/* Members */}
         <Route path="members" element={<LeadershipMembersPage />} />
