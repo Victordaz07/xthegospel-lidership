@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 // Auth pages
 import { LoginPage, RoleSelectionPage } from '../features/auth';
@@ -23,10 +23,24 @@ import ProtectedRoute from './ProtectedRoute';
 import RoleRequiredRoute from './RoleRequiredRoute';
 import WardRequiredRoute from './WardRequiredRoute';
 import LeadershipCallingsRoutes from './LeadershipCallingsRoutes';
+import { StorageService } from '../utils/storage';
+import { FIRST_OPEN_WELCOME_KEY } from '../config/welcome';
+import FirstOpenWelcome from '../components/FirstOpenWelcome';
 
 const AppRouter: React.FC = () => {
+  const location = useLocation();
+  const hasSeenWelcome = StorageService.getItem(FIRST_OPEN_WELCOME_KEY) === 'true';
+
+  if (!hasSeenWelcome && location.pathname !== '/welcome') {
+    return <Navigate to="/welcome" replace />;
+  }
+  if (hasSeenWelcome && location.pathname === '/welcome') {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <Routes>
+      <Route path="/welcome" element={<FirstOpenWelcome />} />
       {/* Public routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/join" element={<JoinSessionPage />} />

@@ -105,7 +105,7 @@ export function getXtgIdFromUrl(): string | null {
  * Generate a deep link to lookup a specific profile
  */
 export function generateLookupLink(xthegospelId: string): string {
-  return `${APP_URLS.leader}/lookup/${xthegospelId}`;
+  return `${APP_URLS.leader}/?xtgId=${xthegospelId}`;
 }
 
 /**

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { I18nProvider } from './context/I18nContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import AppRouter from './router/AppRouter';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -11,14 +12,16 @@ export default function App() {
   
   return (
     <ErrorBoundary>
-      <I18nProvider>
-        <BrowserRouter>
-          <ScrollToTop />
-          <AuthProvider>
-            <AppRouter />
-          </AuthProvider>
-        </BrowserRouter>
-      </I18nProvider>
+      <ThemeProvider>
+        <I18nProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <AuthProvider>
+              <AppRouter />
+            </AuthProvider>
+          </BrowserRouter>
+        </I18nProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

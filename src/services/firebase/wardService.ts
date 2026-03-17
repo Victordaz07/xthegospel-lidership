@@ -13,8 +13,7 @@ import {
   collection,
   query,
   where,
-  serverTimestamp,
-  Timestamp,
+  arrayUnion,
 } from 'firebase/firestore';
 import { getFirebaseDb } from './firebaseApp';
 
@@ -64,7 +63,9 @@ export async function createWard(
     createdBy: creatorUid,
     updatedAt: now,
     memberCount: 0,
-    leaderCount: 1, // Creator is the first leader
+    leaderCount: 1,
+    memberIds: [],
+    leaderIds: [creatorUid],
   };
 
   // Save ward
@@ -86,13 +87,14 @@ export async function createWard(
   const normalizedCode = normalizeWardCode(joinCode);
   await setDoc(doc(getDb(), WARD_CODES_COLLECTION, normalizedCode), codeData);
 
-  // Update creator's ward membership
+  // Update creator's ward membership (creator = leader)
   await updateUserWardMembership(creatorUid, {
     wardId: wardId,
     wardName: request.name,
     stakeName: request.stakeName,
     joinedAt: now,
     joinedVia: 'created',
+    isLeader: true,
   });
 
   return ward;
@@ -163,7 +165,7 @@ export async function joinWardByCode(
     return { success: false, error: 'invalid_code' };
   }
 
-  // Join the ward
+  // Join the ward (join by code = not leader by default)
   const now = Date.now();
   await updateUserWardMembership(uid, {
     wardId: codeData.wardId,
@@ -172,6 +174,7 @@ export async function joinWardByCode(
     stakeName: codeData.stakeName,
     joinedAt: now,
     joinedVia: 'code',
+    isLeader: false,
   });
 
   // Increment usage counter
@@ -179,9 +182,11 @@ export async function joinWardByCode(
     currentUses: codeData.currentUses + 1,
   });
 
-  // Update ward leader count
-  await updateDoc(doc(getDb(), WARDS_COLLECTION, codeData.wardId), {
-    leaderCount: (ward.leaderCount || 0) + 1,
+  // Update ward: add uid to memberIds (para reglas Firestore v2) y memberCount
+  const wardRef = doc(getDb(), WARDS_COLLECTION, codeData.wardId);
+  await updateDoc(wardRef, {
+    memberIds: arrayUnion(uid),
+    memberCount: (ward.memberCount || 0) + 1,
     updatedAt: now,
   });
 
@@ -286,6 +291,77 @@ export async function getWardLeaders(wardId: string): Promise<string[]> {
   
   const snapshot = await getDocs(q);
   return snapshot.docs.map(doc => doc.id);
+}
+
+// ============================================================================
+// MIGRATION: Añadir isLeader a usuarios existentes
+// Ejecutar una vez tras desplegar reglas con isLeader.
+// Ward creators → isLeader: true. Join por code → isLeader: false.
+// SEGURIDAD: Solo ward creators o modo dev pueden ejecutar.
+// ============================================================================
+
+function isMigrationAllowed(callerUid: string, wardCreators: Set<string>): boolean {
+  if (import.meta.env.DEV) return true;
+  return wardCreators.has(callerUid);
+}
+
+export async function migrateWardCreatorsToLeaders(
+  callerUid: string
+): Promise<{ updated: number; errors: string[] }> {
+  const wardsSnap = await getDocs(collection(getDb(), WARDS_COLLECTION));
+  const wardCreators = new Set(
+    wardsSnap.docs
+      .map((d) => (d.data() as Ward).createdBy)
+      .filter(Boolean)
+  );
+
+  if (!isMigrationAllowed(callerUid, wardCreators)) {
+    throw new Error(
+      'No autorizado: solo creadores de ward o modo dev pueden ejecutar la migración.'
+    );
+  }
+
+  const errors: string[] = [];
+  let updated = 0;
+
+  for (const wardDoc of wardsSnap.docs) {
+    const ward = wardDoc.data() as Ward;
+    const creatorUid = ward.createdBy;
+    if (!creatorUid) continue;
+
+    try {
+      const userRef = doc(getDb(), USERS_COLLECTION, creatorUid);
+      const userSnap = await getDoc(userRef);
+      if (!userSnap.exists()) continue;
+
+      const data = userSnap.data();
+      const membership = data.wardMembership;
+      if (!membership || membership.wardId !== ward.id) continue;
+      if (membership.isLeader === true) continue; // ya migrado
+
+      await updateDoc(userRef, {
+        'wardMembership.isLeader': true,
+        updatedAt: Date.now(),
+      });
+      updated++;
+    } catch (e) {
+      errors.push(`${creatorUid}: ${(e as Error).message}`);
+    }
+  }
+  return { updated, errors };
+}
+
+/** Marca un usuario como líder (para migración manual o admin). */
+export async function setUserAsWardLeader(uid: string, isLeader: boolean): Promise<void> {
+  const userRef = doc(getDb(), USERS_COLLECTION, uid);
+  const userSnap = await getDoc(userRef);
+  if (!userSnap.exists()) throw new Error('Usuario no encontrado');
+  const data = userSnap.data();
+  if (!data.wardMembership) throw new Error('Usuario no tiene wardMembership');
+  await updateDoc(userRef, {
+    'wardMembership.isLeader': isLeader,
+    updatedAt: Date.now(),
+  });
 }
 
 // ============================================================================

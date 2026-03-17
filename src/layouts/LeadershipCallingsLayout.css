@@ -61,4 +61,26 @@
 .leadership-nav-label {
   font-size: var(--text-xs);
   font-weight: var(--font-medium);
+  white-space: nowrap;
+}
+
+/* Sync banners (LeadershipSyncBridge) */
+.sync-offline-banner,
+.sync-error-banner {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.sync-offline-banner {
+  background: #F59E0B;
+  color: #1F2937;
+}
+
+.sync-error-banner {
+  background: #FEE2E2;
+  color: #991B1B;
 }

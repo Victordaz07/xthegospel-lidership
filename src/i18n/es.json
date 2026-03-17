@@ -1,7 +1,30 @@
 {
   "app": {
     "name": "xTheGospel Leaders",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "welcome": {
+      "eyebrow": "Bienvenida",
+      "title": "Bienvenido a xTheGospel Leaders",
+      "subtitle": "Una introducción breve para que empieces con claridad desde el primer día.",
+      "progressLabel": "Progreso de bienvenida",
+      "slides": [
+        {
+          "title": "¿De qué se trata esta app?",
+          "description": "Esta app ayuda a líderes de barrio y estaca a organizar llamamientos, coordinación y seguimiento con claridad."
+        },
+        {
+          "title": "¿Qué encontrarás aquí?",
+          "description": "Encontrarás dashboards, gestión de llamamientos, notas y herramientas prácticas para el liderazgo diario."
+        },
+        {
+          "title": "Tutorial rápido",
+          "description": "Empieza iniciando sesión, selecciona tu rol, completa la configuración del barrio y luego revisa tu dashboard y llamamientos."
+        }
+      ],
+      "skip": "Saltar",
+      "next": "Siguiente",
+      "start": "Comenzar"
+    }
   },
   "roles": {
     "leader": {
@@ -64,5 +87,86 @@
     "error": "Error",
     "success": "Éxito",
     "confirm": "Confirmar"
+  },
+  "auth": {
+    "login": {
+      "title": "xTheGospel Leaders",
+      "subtitle": "Herramientas para líderes de barrio y estaca",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "tu@correo.com",
+      "passwordLabel": "Contraseña",
+      "submit": "Iniciar sesión",
+      "infoText": "Usa la misma cuenta que creaste en la app de miembros",
+      "noAccountPrefix": "¿No tienes cuenta? Visita",
+      "noAccountSuffix": "para más información.",
+      "errors": {
+        "completeAllFields": "Por favor completa todos los campos"
+      }
+    },
+    "roleSelection": {
+      "title": "¿Cuál es tu llamamiento?",
+      "subtitle": "Selecciona tu rol para personalizar tu experiencia",
+      "confirm": "Confirmar",
+      "skip": "Omitir por ahora"
+    },
+    "profile": {
+      "title": "Perfil",
+      "userFallback": "Usuario",
+      "leadershipFallback": "Liderazgo",
+      "bishopric": "Obispado",
+      "wardSection": "Tu barrio",
+      "branch": "Rama",
+      "ward": "Barrio",
+      "district": "Distrito",
+      "stake": "Estaca",
+      "connected": "Conectado",
+      "joinedCreated": "Creador del barrio",
+      "joinedCode": "Por código",
+      "joinedInvited": "Invitado",
+      "callingSection": "Tu llamamiento",
+      "currentCalling": "Llamamiento actual",
+      "organization": "Organización",
+      "changeCalling": "Cambiar llamamiento",
+      "accountSection": "Cuenta",
+      "preferencesSection": "Preferencias",
+      "email": "Correo electrónico",
+      "userId": "ID de usuario",
+      "accountStatus": "Estado de la cuenta",
+      "accountStatusValue": "Activa",
+      "language": "Idioma",
+      "appearance": "Apariencia",
+      "appSection": "Aplicación",
+      "version": "Versión",
+      "storage": "Almacenamiento",
+      "storageValue": "Local + Cloud",
+      "logout": "Cerrar sesión",
+      "loggingOut": "Cerrando sesión...",
+      "footerSubtitle": "Herramientas para servir mejor",
+      "errors": {
+        "logout": "Error al cerrar sesión",
+        "unknown": "Error desconocido",
+        "sync": "Error al sincronizar",
+        "generic": "Error",
+        "hydrate": "Error al cargar desde la nube"
+      },
+      "sync": {
+        "section": "Sincronización",
+        "lastSync": "Última sincronización",
+        "syncing": "Sincronizando...",
+        "syncNow": "Sincronizar ahora",
+        "replaceFromCloud": "Reemplazar desde la nube",
+        "replaceConfirm": "Esto reemplazará tus datos locales con los de la nube. ¿Continuar?",
+        "loading": "Cargando...",
+        "never": "Nunca",
+        "justNow": "Hace un momento",
+        "minutesAgo": "Hace {{count}} min",
+        "hoursAgo": "Hace {{count}} h"
+      },
+      "theme": {
+        "light": "Claro",
+        "dark": "Oscuro",
+        "system": "Sistema"
+      }
+    }
   }
 }

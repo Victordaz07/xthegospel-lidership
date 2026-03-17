@@ -35,6 +35,11 @@ export interface Ward {
   // Stats (optional, updated periodically)
   memberCount?: number;
   leaderCount?: number;
+
+  /** UIDs de miembros (para reglas Firestore v2). Incluye líderes. */
+  memberIds?: string[];
+  /** UIDs de líderes (obispado, etc.) con permisos de escritura en ward. */
+  leaderIds?: string[];
 }
 
 // ============================================================================
@@ -70,6 +75,8 @@ export interface UserWardMembership {
   stakeName?: string;
   joinedAt: number;
   joinedVia: 'code' | 'created' | 'invited';
+  /** Si true, puede leer/escribir preparación bautismal. Creator = true, join por code = false. */
+  isLeader?: boolean;
 }
 
 // ============================================================================

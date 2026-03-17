@@ -55,7 +55,10 @@ function ensureSchema<T extends { id: string; createdAt?: string; updatedAt?: st
 export async function upsertCalling(uid: string, calling: Calling): Promise<void> {
   const db = getFirebaseDb();
   const docRef = doc(db, `users/${uid}/leadership_callings/${calling.id}`);
-  const data = ensureSchema(calling, !!calling.updatedAt);
+  const data = ensureSchema(
+    { ...calling, memberName: calling.memberName ?? '', position: calling.position ?? '' },
+    !!calling.updatedAt
+  );
   await setDoc(docRef, {
     ...data,
     updatedAt: serverTimestamp(),
@@ -110,7 +113,10 @@ export async function upsertResponsibility(
 ): Promise<void> {
   const db = getFirebaseDb();
   const docRef = doc(db, `users/${uid}/leadership_responsibilities/${responsibility.id}`);
-  const data = ensureSchema(responsibility, !!responsibility.updatedAt);
+  const data = ensureSchema(
+    { ...responsibility, title: responsibility.title ?? '', description: responsibility.description ?? '' },
+    !!responsibility.updatedAt
+  );
   await setDoc(docRef, {
     ...data,
     updatedAt: serverTimestamp(),
@@ -146,7 +152,7 @@ export async function deleteResponsibility(uid: string, respId: string): Promise
 export async function upsertNote(uid: string, note: LeadershipNote): Promise<void> {
   const db = getFirebaseDb();
   const docRef = doc(db, `users/${uid}/leadership_notes/${note.id}`);
-  const data = ensureSchema(note, !!note.updatedAt);
+  const data = ensureSchema({ ...note, content: note.content ?? '' }, !!note.updatedAt);
   await setDoc(docRef, {
     ...data,
     updatedAt: serverTimestamp(),
@@ -182,7 +188,10 @@ export async function deleteNote(uid: string, noteId: string): Promise<void> {
 export async function upsertEvent(uid: string, event: CallingEvent): Promise<void> {
   const db = getFirebaseDb();
   const docRef = doc(db, `users/${uid}/leadership_events/${event.id}`);
-  const data = ensureSchema(event, !!event.updatedAt);
+  const data = ensureSchema(
+    { ...event, title: event.title ?? '', description: event.description ?? '' },
+    !!event.updatedAt
+  );
   await setDoc(docRef, {
     ...data,
     updatedAt: serverTimestamp(),
@@ -220,6 +229,8 @@ export async function upsertObservation(uid: string, observation: Observation): 
   const docRef = doc(db, `users/${uid}/leadership_observations/${observation.id}`);
   const data = {
     ...observation,
+    content: observation.content ?? '',
+    milestone: observation.milestone ?? '',
     schemaVersion: SCHEMA_VERSION,
     createdAt: observation.createdAt || new Date().toISOString(),
   };

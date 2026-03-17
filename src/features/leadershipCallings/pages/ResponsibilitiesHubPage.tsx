@@ -67,7 +67,7 @@ const ResponsibilitiesHubPage: React.FC = () => {
       <header className="leadership-header">
         <button
           className="back-button"
-          onClick={() => navigate('/home')}
+          onClick={() => navigate('/')}
         >
           ← Volver
         </button>

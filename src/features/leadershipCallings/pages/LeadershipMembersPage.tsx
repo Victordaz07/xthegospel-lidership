@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUsers, FaMagnifyingGlass, FaQrcode, FaUserPlus, FaDatabase, FaSpinner, FaRotate, FaChurch } from 'react-icons/fa6';
+import { FaUsers, FaMagnifyingGlass, FaQrcode, FaUserPlus, FaDatabase, FaSpinner, FaRotate } from 'react-icons/fa6';
 import { useCallingsStore } from '../state';
 import { PageShell, Card } from '../../../ui';
 import { MemberLookup, QRScanner } from '../../../components/profile';
@@ -26,9 +26,10 @@ const STATUS_LABELS: Record<MemberStatus, string> = {
   returned: 'Retornado',
 };
 
-type TabType = 'members' | 'lookup' | 'scanner' | 'ward';
+type TabType = 'members' | 'lookup' | 'scanner';
 
 const LeadershipMembersPage: React.FC = () => {
+  const isDevMode = import.meta.env.DEV;
   const navigate = useNavigate();
   const callings = useCallingsStore((s) => s.callings);
   const { members, loading: membersLoading, refetch: refetchMembers } = useRegisteredMembers(50);
@@ -86,7 +87,7 @@ const LeadershipMembersPage: React.FC = () => {
   return (
     <PageShell
       title="Miembros"
-      onBack={() => navigate('/home')}
+      onBack={() => navigate('/')}
       variant="gradient"
     >
       {/* Tab Navigation */}
@@ -111,13 +112,6 @@ const LeadershipMembersPage: React.FC = () => {
         >
           <FaQrcode />
           <span>Escanear</span>
-        </button>
-        <button 
-          className={`lm-tab ${activeTab === 'ward' ? 'lm-tab--active' : ''}`}
-          onClick={() => setActiveTab('ward')}
-        >
-          <FaChurch />
-          <span>Barrio</span>
         </button>
       </div>
 
@@ -147,14 +141,16 @@ const LeadershipMembersPage: React.FC = () => {
             <div className="lm-empty">
               <FaUsers className="lm-empty-icon" />
               <p>No hay miembros registrados</p>
-              <button 
-                className="lm-seed-btn"
-                onClick={handleSeedData}
-                disabled={seeding}
-              >
-                <FaDatabase />
-                {seeding ? 'Creando datos...' : 'Crear Datos de Prueba'}
-              </button>
+              {isDevMode && (
+                <button 
+                  className="lm-seed-btn"
+                  onClick={handleSeedData}
+                  disabled={seeding}
+                >
+                  <FaDatabase />
+                  {seeding ? 'Creando datos...' : 'Crear Datos de Prueba'}
+                </button>
+              )}
             </div>
           ) : (
             <div className="lm-members-list">
@@ -220,25 +216,26 @@ const LeadershipMembersPage: React.FC = () => {
       {/* Lookup Tab */}
       {activeTab === 'lookup' && (
         <div className="lm-content">
-          {/* Dev: Seed Test Data */}
-          <div className="lm-dev-tools">
-            <button 
-              className="lm-seed-btn"
-              onClick={handleSeedData}
-              disabled={seeding}
-            >
-              <FaDatabase />
-              {seeding ? 'Creando datos...' : 'Crear Datos de Prueba'}
-            </button>
-            {seedResult && (
-              <div className={`lm-seed-result ${seedResult.startsWith('✅') ? 'lm-seed-result--success' : 'lm-seed-result--error'}`}>
-                {seedResult}
-              </div>
-            )}
-            <p className="lm-dev-hint">
-              IDs disponibles: <code>XTG-2026-TEST01</code> a <code>XTG-2026-TEST05</code>
-            </p>
-          </div>
+          {isDevMode && (
+            <div className="lm-dev-tools">
+              <button 
+                className="lm-seed-btn"
+                onClick={handleSeedData}
+                disabled={seeding}
+              >
+                <FaDatabase />
+                {seeding ? 'Creando datos...' : 'Crear Datos de Prueba'}
+              </button>
+              {seedResult && (
+                <div className={`lm-seed-result ${seedResult.startsWith('✅') ? 'lm-seed-result--success' : 'lm-seed-result--error'}`}>
+                  {seedResult}
+                </div>
+              )}
+              <p className="lm-dev-hint">
+                IDs disponibles: <code>XTG-2026-TEST01</code> a <code>XTG-2026-TEST05</code>
+              </p>
+            </div>
+          )}
 
           <MemberLookup 
             onMemberFound={handleMemberFound}
@@ -257,35 +254,6 @@ const LeadershipMembersPage: React.FC = () => {
         </div>
       )}
 
-      {/* Ward Tab */}
-      {activeTab === 'ward' && (
-        <div className="lm-content">
-          <Card variant="default" padding="lg">
-            <div style={{ textAlign: 'center', padding: '24px 0' }}>
-              <FaChurch style={{ fontSize: '48px', color: '#1F3A5F', marginBottom: '16px' }} />
-              <h3 style={{ margin: '0 0 8px 0', color: '#1F3A5F' }}>Código del Barrio</h3>
-              <p style={{ margin: '0 0 16px 0', color: '#64748b', fontSize: '14px' }}>
-                Ve a tu perfil para ver y compartir el código de tu barrio
-              </p>
-              <button
-                onClick={() => navigate('/profile')}
-                style={{
-                  padding: '12px 24px',
-                  background: '#1F3A5F',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                }}
-              >
-                Ir al Perfil
-              </button>
-            </div>
-          </Card>
-        </div>
-      )}
     </PageShell>
   );
 };

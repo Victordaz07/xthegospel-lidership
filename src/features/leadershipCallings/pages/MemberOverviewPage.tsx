@@ -3,11 +3,13 @@
  *
  * Shows member's callings (current and past) + leader notes.
  * NO surveillance, NO activity metrics.
+ * Baptism preparation card for investigators.
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCallingsStore, useLeadershipNotesStore } from '../state';
+import { useWardStore } from '../../../state/ward/useWardStore';
 import {
   STATUS_LABELS,
   ORGANIZATION_LABELS,
@@ -15,19 +17,47 @@ import {
   NoteType,
 } from '../types';
 import { PageShell, Card, SectionTitle, Button } from '../../../ui';
+import { getBaptismPreparation, isStale } from '../../baptismPreparation/services/baptismPreparationFirestore';
+import { isReadyForBaptism, getPendingMilestones } from '../../baptismPreparation/utils/isReadyForBaptism';
+import type { BaptismPreparationStored } from '../../baptismPreparation/types';
+import { getLessonProgressForMember, getProgressPercent, type WardLessonProgress } from '../../../services/firebase/lessonProgressService';
+import { FaDroplet, FaFileImport, FaGraduationCap } from 'react-icons/fa6';
 
-// Mock members data
-const MOCK_MEMBERS: Record<string, { name: string; since: string }> = {
+// Mock members data (memberStatus for baptism card: investigator = show prep)
+const MOCK_MEMBERS: Record<string, { name: string; since: string; memberStatus?: string }> = {
   'member-1': { name: 'María García', since: '2018' },
-  'member-2': { name: 'Juan Pérez', since: '2020' },
+  'member-2': { name: 'Juan Pérez', since: '2020', memberStatus: 'investigator' },
   'member-3': { name: 'Ana López', since: '2019' },
-  'member-4': { name: 'Pedro Martínez', since: '2016' },
+  'member-4': { name: 'Pedro Martínez', since: '2016', memberStatus: 'investigator' },
   'member-5': { name: 'Roberto Sánchez', since: '2021' },
 };
 
 const MemberOverviewPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { membership } = useWardStore();
+  const wardId = membership?.wardId;
+
+  const [baptismPrep, setBaptismPrep] = useState<BaptismPreparationStored | null>(null);
+  const [baptismPrepLoading, setBaptismPrepLoading] = useState(false);
+  const [lessonProgress, setLessonProgress] = useState<WardLessonProgress | null>(null);
+  const [lessonProgressLoading, setLessonProgressLoading] = useState(false);
+
+  useEffect(() => {
+    if (!wardId || !id) return;
+    setBaptismPrepLoading(true);
+    getBaptismPreparation(wardId, id)
+      .then(setBaptismPrep)
+      .finally(() => setBaptismPrepLoading(false));
+  }, [wardId, id]);
+
+  useEffect(() => {
+    if (!wardId || !id) return;
+    setLessonProgressLoading(true);
+    getLessonProgressForMember(wardId, id)
+      .then(setLessonProgress)
+      .finally(() => setLessonProgressLoading(false));
+  }, [wardId, id]);
 
   // Fix: Use raw arrays and filter with useMemo to avoid infinite re-renders
   const allCallings = useCallingsStore(s => s.callings);
@@ -120,6 +150,66 @@ const MemberOverviewPage: React.FC = () => {
             </p>
           </div>
         </Card>
+
+        {/* Baptism Preparation (investigators) */}
+        {(member?.memberStatus === 'investigator' || baptismPrep) && (
+          <Card
+            variant="default"
+            padding="md"
+            onClick={() => navigate(`/members/${id}/baptism-preparation`)}
+            className="calling-mini-card-clickable"
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+              <FaDroplet style={{ color: 'var(--am-color-accent)', fontSize: 20 }} />
+              <SectionTitle style={{ margin: 0 }}>Preparación bautismal</SectionTitle>
+            </div>
+            {baptismPrepLoading ? (
+              <p style={{ margin: 0, fontSize: 14, color: 'var(--am-color-text-muted)' }}>Cargando...</p>
+            ) : baptismPrep ? (
+              <>
+                <p style={{ margin: '0 0 4px 0', fontSize: 14 }}>
+                  <strong>Listo:</strong> {isReadyForBaptism(baptismPrep) ? 'Sí' : 'No'}
+                </p>
+                {getPendingMilestones(baptismPrep).length > 0 && (
+                  <p style={{ margin: 0, fontSize: 13, color: 'var(--am-color-text-muted)' }}>
+                    Pendiente: {getPendingMilestones(baptismPrep).slice(0, 2).join(', ')}
+                    {getPendingMilestones(baptismPrep).length > 2 ? '...' : ''}
+                  </p>
+                )}
+                <p style={{ margin: '8px 0 0 0', fontSize: 12, color: 'var(--am-color-text-muted)' }}>
+                  Última importación: {new Date(baptismPrep.lastImportedAt).toLocaleDateString()}
+                  {isStale(baptismPrep.sourceExportedAt) && ' (desactualizado)'}
+                </p>
+              </>
+            ) : (
+              <p style={{ margin: 0, fontSize: 14, color: 'var(--am-color-text-muted)' }}>
+                Sin datos. <FaFileImport style={{ marginLeft: 4 }} /> Importar
+              </p>
+            )}
+          </Card>
+        )}
+
+        {/* Lesson Progress (EPIC 4) */}
+        {(lessonProgressLoading || lessonProgress) && (
+          <Card variant="default" padding="md">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+              <FaGraduationCap style={{ color: 'var(--am-color-accent)', fontSize: 20 }} />
+              <SectionTitle style={{ margin: 0 }}>Progreso de capacitación</SectionTitle>
+            </div>
+            {lessonProgressLoading ? (
+              <p style={{ margin: 0, fontSize: 14, color: 'var(--am-color-text-muted)' }}>Cargando...</p>
+            ) : lessonProgress ? (
+              <p style={{ margin: 0, fontSize: 14 }}>
+                <strong>{getProgressPercent(lessonProgress)}%</strong> completado
+                ({Object.values(lessonProgress.completedLessons).filter((e) => e.percent >= 100).length} lecciones)
+              </p>
+            ) : (
+              <p style={{ margin: 0, fontSize: 14, color: 'var(--am-color-text-muted)' }}>
+                Sin progreso registrado
+              </p>
+            )}
+          </Card>
+        )}
 
         {/* Current Callings */}
         <div>

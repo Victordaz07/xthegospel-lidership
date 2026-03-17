@@ -19,6 +19,7 @@ export const ScrollToTop: React.FC = () => {
     const scrollableSelectors = [
       '.leadership-callings-content',
       '.page-shell',
+      '.ui-page-shell',
       '.tab-content',
       '[data-scroll-container]',
     ];

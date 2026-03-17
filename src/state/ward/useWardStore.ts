@@ -1,18 +1,24 @@
 /**
  * Ward Store - Zustand
- * 
+ *
  * Manages ward/branch state and membership.
- * Works in offline mode if Firebase is not available.
+ * EPIC 2.1: Cloud load with cache fallback, offline resilient.
  */
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Ward, UserWardMembership, CreateWardRequest, generateWardCode, formatWardCode } from '../../types/ward';
 import { FLAGS } from '../../config/featureFlags';
+import { useWardLoadStatusStore } from './useWardLoadStatusStore';
+import {
+  saveWardMembershipCache,
+  readWardMembershipCache,
+  isCacheStale,
+  clearWardMembershipCache,
+} from './wardMembershipCache';
 
 const STORAGE_KEY = 'xtg_ward_v1';
 
-// Check if we should use cloud
 const useCloud = FLAGS.CLOUD_SYNC_ENABLED;
 
 interface WardState {
@@ -48,48 +54,98 @@ export const useWardStore = create<WardState>()(
       error: null,
 
       loadWardMembership: async (uid: string) => {
-        // If we have local data, use it
+        const statusStore = useWardLoadStatusStore.getState();
+        statusStore.setLoading();
+        set({ isLoading: true, error: null });
+
         const { ward, membership } = get();
-        if (ward && membership) {
-          set({ isWardMember: true, isLoading: false });
+
+        if (!useCloud) {
+          // Local-only: use persisted state
+          if (ward && membership) {
+            set({ isWardMember: true, isLoading: false });
+            statusStore.setSuccess('cache');
+          } else {
+            set({ isWardMember: false, isLoading: false });
+            statusStore.setSuccess(null);
+          }
           return;
         }
 
-        // Try to load from Firebase if enabled
-        if (useCloud) {
-          set({ isLoading: true, error: null });
-          try {
-            const { getUserWardMembership, getWard } = await import('../../services/firebase/wardService');
-            const membershipData = await getUserWardMembership(uid);
-            
-            if (membershipData) {
-              const wardData = await getWard(membershipData.wardId);
+        if (!navigator.onLine) {
+          const cached = readWardMembershipCache(uid);
+          if (cached) {
+            const stale = isCacheStale(cached.loadedAt);
+            set({
+              membership: cached.membership,
+              ward: cached.ward,
+              isWardMember: true,
+              isLoading: false,
+            });
+            statusStore.setSuccess('cache', stale);
+          } else {
+            set({ isLoading: false });
+            statusStore.setOffline();
+          }
+          return;
+        }
+
+        try {
+          const { getUserWardMembership, getWard } = await import('../../services/firebase/wardService');
+          const membershipData = await getUserWardMembership(uid);
+
+          if (membershipData) {
+            const wardData = await getWard(membershipData.wardId);
+            if (wardData) {
+              saveWardMembershipCache(uid, membershipData, wardData);
               set({
                 membership: membershipData,
                 ward: wardData,
                 isWardMember: true,
                 isLoading: false,
               });
+              statusStore.setSuccess('cloud');
             } else {
               set({
-                membership: null,
+                membership: membershipData,
                 ward: null,
-                isWardMember: false,
+                isWardMember: true,
                 isLoading: false,
               });
+              statusStore.setSuccess('cloud');
             }
-          } catch (error) {
-            console.error('Error loading ward membership:', error);
-            // Fall back to local data
-            if (ward && membership) {
-              set({ isWardMember: true, isLoading: false });
-            } else {
-              set({ isLoading: false });
-            }
+          } else {
+            set({
+              membership: null,
+              ward: null,
+              isWardMember: false,
+              isLoading: false,
+            });
+            statusStore.setSuccess('cloud');
           }
-        } else {
-          // Local only mode
-          set({ isLoading: false });
+        } catch (error: unknown) {
+          console.error('Error loading ward membership:', error);
+
+          const isPermissionDenied =
+            error && typeof error === 'object' && 'code' in error && (error as { code?: string }).code === 'permission-denied';
+          const errorMsg = isPermissionDenied
+            ? 'No tienes acceso al barrio / tu cuenta no está vinculada.'
+            : 'No pudimos cargar tu barrio. Intenta de nuevo.';
+
+          const cached = readWardMembershipCache(uid);
+          if (cached) {
+            const stale = isCacheStale(cached.loadedAt);
+            set({
+              membership: cached.membership,
+              ward: cached.ward,
+              isWardMember: true,
+              isLoading: false,
+            });
+            statusStore.setSuccess('cache', stale);
+          } else {
+            set({ isLoading: false });
+            statusStore.setError(errorMsg);
+          }
         }
       },
 
@@ -120,14 +176,16 @@ export const useWardStore = create<WardState>()(
             joinedAt: Date.now(),
             joinedVia: 'created',
           };
-          
+
+          if (useCloud) saveWardMembershipCache(uid, membership, ward);
+
           set({
             ward,
             membership,
             isWardMember: true,
             isLoading: false,
           });
-          
+
           return ward;
         } catch (error) {
           console.error('Error creating ward:', error);
@@ -156,14 +214,16 @@ export const useWardStore = create<WardState>()(
                   joinedAt: Date.now(),
                   joinedVia: 'code',
                 };
-                
+
+                if (useCloud) saveWardMembershipCache(uid, membership, result.ward);
+
                 set({
                   ward: result.ward,
                   membership,
                   isWardMember: true,
                   isLoading: false,
                 });
-                
+
                 return { success: true };
               } else {
                 const errorMessages: Record<string, string> = {
@@ -244,7 +304,7 @@ export const useWardStore = create<WardState>()(
 
       leave: async (uid: string) => {
         set({ isLoading: true, error: null });
-        
+
         try {
           if (useCloud) {
             try {
@@ -253,8 +313,9 @@ export const useWardStore = create<WardState>()(
             } catch (error) {
               console.warn('Firebase error:', error);
             }
+            clearWardMembershipCache(uid);
           }
-          
+
           set({
             ward: null,
             membership: null,
@@ -277,6 +338,7 @@ export const useWardStore = create<WardState>()(
           isWardMember: false,
           error: null,
         });
+        useWardLoadStatusStore.getState().reset();
       },
 
       clearError: () => {

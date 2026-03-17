@@ -6,6 +6,13 @@ import React, {
   useEffect,
 } from 'react';
 import { StorageService } from '../utils/storage';
+import {
+  DEFAULT_LOCALE,
+  FALLBACK_LOCALE,
+  LOCALE_STORAGE_KEY,
+  isSupportedLocale,
+  type Locale,
+} from '../i18n/locales';
 
 // Import translation files
 import esTranslations from '../i18n/es.json';
@@ -16,7 +23,7 @@ const dictionaries: Record<string, Record<string, any>> = {
   en: enTranslations,
 };
 
-export type Locale = 'es' | 'en';
+export type { Locale } from '../i18n/locales';
 
 interface I18nContextType {
   locale: Locale;
@@ -49,7 +56,7 @@ interface I18nProviderProps {
 }
 
 export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
-  const [locale, setLocaleState] = useState<Locale>('es');
+  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
 
   useEffect(() => {
     loadLocale();
@@ -57,24 +64,23 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
 
   const loadLocale = async () => {
     try {
-      const storedLocale = StorageService.getItem('appLang');
-      if (storedLocale && ['es', 'en'].includes(storedLocale)) {
-        setLocaleState(storedLocale as Locale);
+      const storedLocale = StorageService.getItem(LOCALE_STORAGE_KEY);
+      if (isSupportedLocale(storedLocale)) {
+        setLocaleState(storedLocale);
       } else {
-        const systemLocale = Intl.DateTimeFormat().resolvedOptions().locale;
-        const detectedLocale = systemLocale.includes('es') ? 'es' : 'en';
-        setLocaleState(detectedLocale);
-        StorageService.setItem('appLang', detectedLocale);
+        setLocaleState(DEFAULT_LOCALE);
+        StorageService.setItem(LOCALE_STORAGE_KEY, DEFAULT_LOCALE);
       }
     } catch (error) {
       console.error('Error loading locale:', error);
-      setLocaleState('es');
+      setLocaleState(DEFAULT_LOCALE);
     }
   };
 
   const setLocale = async (newLocale: Locale) => {
     try {
-      StorageService.setItem('appLang', newLocale);
+      if (!isSupportedLocale(newLocale)) return;
+      StorageService.setItem(LOCALE_STORAGE_KEY, newLocale);
       setLocaleState(newLocale);
     } catch (error) {
       console.error('Error saving locale:', error);
@@ -87,7 +93,7 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
 
     // Fallback to English
     if (value === undefined) {
-      const englishTranslations = dictionaries.en || {};
+      const englishTranslations = dictionaries[FALLBACK_LOCALE] || {};
       value = getNestedValue(englishTranslations, path);
       if (value === undefined) {
         return path;

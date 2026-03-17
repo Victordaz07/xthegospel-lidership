@@ -9,12 +9,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserRoleStore } from '../../../state/user/useUserRoleStore';
 import { getRolesGrouped, LeadershipRole, RoleDefinition } from '../../../config/roles';
+import { useI18n } from '../../../context/I18nContext';
 import './RoleSelectionPage.css';
 
 const RoleSelectionPage: React.FC = () => {
   const navigate = useNavigate();
   const { role: currentRole, setRole } = useUserRoleStore();
   const [selectedRole, setSelectedRole] = useState<LeadershipRole | null>(currentRole);
+  const { t } = useI18n();
   
   const roleGroups = getRolesGrouped();
 
@@ -41,9 +43,9 @@ const RoleSelectionPage: React.FC = () => {
         {/* Header */}
         <div className="role-selection-header">
           <div className="role-selection-icon">👔</div>
-          <h1 className="role-selection-title">¿Cuál es tu llamamiento?</h1>
+          <h1 className="role-selection-title">{t('auth.roleSelection.title')}</h1>
           <p className="role-selection-subtitle">
-            Selecciona tu rol para personalizar tu experiencia
+            {t('auth.roleSelection.subtitle')}
           </p>
         </div>
 
@@ -73,13 +75,13 @@ const RoleSelectionPage: React.FC = () => {
             onClick={handleConfirm}
             disabled={!selectedRole}
           >
-            Confirmar
+            {t('auth.roleSelection.confirm')}
           </button>
           <button
             className="role-skip-button"
             onClick={handleSkip}
           >
-            Omitir por ahora
+            {t('auth.roleSelection.skip')}
           </button>
         </div>
       </div>

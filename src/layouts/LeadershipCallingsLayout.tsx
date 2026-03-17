@@ -9,6 +9,7 @@
 
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import LeadershipSyncBridge from '../features/leadershipCallings/components/LeadershipSyncBridge';
 import {
   FaHouse,
   FaUser,
@@ -64,6 +65,7 @@ export default function LeadershipCallingsLayout({
 
   return (
     <div className="leadership-callings-layout">
+      <LeadershipSyncBridge />
       <main className="leadership-callings-content">{children}</main>
 
       <BottomNav

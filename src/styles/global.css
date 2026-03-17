@@ -85,6 +85,21 @@
   --spacing-12: var(--space-12);
 }
 
+:root[data-theme='dark'] {
+  --background: #0F172A;
+  --background-card: #111827;
+  --background-elevated: #1F2937;
+  --background-muted: #1E293B;
+  --foreground: #E5E7EB;
+  --text-primary: #E5E7EB;
+  --text-secondary: #CBD5E1;
+  --text-tertiary: #94A3B8;
+  --text-muted: #64748B;
+  --border: #334155;
+  --border-subtle: #334155;
+  --border-strong: #475569;
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -253,4 +268,18 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Números, porcentajes, badges y labels cortos: no partirse verticalmente */
+.ui-bottom-nav__label,
+.leadership-nav-label,
+[class*="badge"],
+[class*="__count"],
+[class*="__percent"],
+.ui-progress-bar__label,
+.lm-section-count,
+.lm-calling-badge,
+.status-badge {
+  white-space: nowrap !important;
+  word-break: normal !important;
 }

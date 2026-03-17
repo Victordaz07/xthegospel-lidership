@@ -8,6 +8,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { useI18n } from '../../../context/I18nContext';
 import './LoginPage.css';
 
 const LoginPage: React.FC = () => {
@@ -15,6 +16,7 @@ const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const returnTo = searchParams.get('returnTo');
   const { login, isLoading, error, clearError, isAuthenticated } = useAuth();
+  const { t } = useI18n();
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +37,7 @@ const LoginPage: React.FC = () => {
 
     // Validation
     if (!email.trim() || !password.trim()) {
-      setLocalError('Por favor completa todos los campos');
+      setLocalError(t('auth.login.errors.completeAllFields'));
       return;
     }
 
@@ -55,9 +57,9 @@ const LoginPage: React.FC = () => {
         {/* Logo/Header */}
         <div className="login-header">
           <div className="login-logo">👔</div>
-          <h1 className="login-title">xTheGospel Leaders</h1>
+          <h1 className="login-title">{t('auth.login.title')}</h1>
           <p className="login-subtitle">
-            Herramientas para líderes de barrio y estaca
+            {t('auth.login.subtitle')}
           </p>
         </div>
 
@@ -65,7 +67,7 @@ const LoginPage: React.FC = () => {
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email" className="form-label">
-              Correo electrónico
+              {t('auth.login.emailLabel')}
             </label>
             <input
               id="email"
@@ -73,7 +75,7 @@ const LoginPage: React.FC = () => {
               className="form-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@correo.com"
+              placeholder={t('auth.login.emailPlaceholder')}
               autoComplete="email"
               disabled={isLoading}
             />
@@ -81,7 +83,7 @@ const LoginPage: React.FC = () => {
 
           <div className="form-group">
             <label htmlFor="password" className="form-label">
-              Contraseña
+              {t('auth.login.passwordLabel')}
             </label>
             <input
               id="password"
@@ -109,7 +111,7 @@ const LoginPage: React.FC = () => {
             {isLoading ? (
               <span className="loading-spinner">⏳</span>
             ) : (
-              'Iniciar sesión'
+              t('auth.login.submit')
             )}
           </button>
         </form>
@@ -119,16 +121,16 @@ const LoginPage: React.FC = () => {
           <div className="login-info">
             <span className="info-icon">ℹ️</span>
             <p className="info-text">
-              Usa la misma cuenta que creaste en la app de miembros
+              {t('auth.login.infoText')}
               <strong> xTheGospel</strong>
             </p>
           </div>
           <p className="info-subtext">
-            ¿No tienes cuenta? Visita{' '}
+            {t('auth.login.noAccountPrefix')}{' '}
             <a href="https://xthegospel.com" target="_blank" rel="noopener noreferrer" className="info-link">
               xthegospel.com
             </a>
-            {' '}para más información.
+            {' '}{t('auth.login.noAccountSuffix')}
           </p>
         </div>
       </div>

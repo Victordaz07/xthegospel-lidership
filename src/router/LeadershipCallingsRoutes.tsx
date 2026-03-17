@@ -37,6 +37,7 @@ import {
   BishopTeachingDashboard,
   TeachingAnalyticsPage,
 } from '../features/teachingSessions/pages';
+import BaptismPreparationViewPage from '../features/baptismPreparation/pages/BaptismPreparationViewPage';
 import BishopricRequiredRoute from './BishopricRequiredRoute';
 
 // Import CSS
@@ -68,6 +69,7 @@ const LeadershipCallingsRoutes: React.FC = () => {
         
         {/* Members */}
         <Route path="members" element={<LeadershipMembersPage />} />
+        <Route path="members/:id/baptism-preparation" element={<BaptismPreparationViewPage />} />
         <Route path="members/:id" element={<MemberOverviewPage />} />
         
         {/* Calendar */}

@@ -1,7 +1,30 @@
 {
   "app": {
     "name": "xTheGospel Leaders",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "welcome": {
+      "eyebrow": "Welcome",
+      "title": "Welcome to xTheGospel Leaders",
+      "subtitle": "A quick intro so you can get value from day one.",
+      "progressLabel": "Welcome progress",
+      "slides": [
+        {
+          "title": "What is this app?",
+          "description": "This app helps ward and stake leaders organize callings, coordination, and follow-up with clarity."
+        },
+        {
+          "title": "What can you find here?",
+          "description": "You will find dashboards, callings management, notes, and practical tools for day-to-day leadership."
+        },
+        {
+          "title": "Quick tutorial",
+          "description": "Start by signing in, choose your role, complete ward setup, and then review your dashboard and callings."
+        }
+      ],
+      "skip": "Skip",
+      "next": "Next",
+      "start": "Start"
+    }
   },
   "roles": {
     "leader": {
@@ -64,5 +87,86 @@
     "error": "Error",
     "success": "Success",
     "confirm": "Confirm"
+  },
+  "auth": {
+    "login": {
+      "title": "xTheGospel Leaders",
+      "subtitle": "Tools for ward and stake leaders",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@email.com",
+      "passwordLabel": "Password",
+      "submit": "Sign in",
+      "infoText": "Use the same account you created in the members app",
+      "noAccountPrefix": "Don't have an account? Visit",
+      "noAccountSuffix": "for more information.",
+      "errors": {
+        "completeAllFields": "Please complete all fields"
+      }
+    },
+    "roleSelection": {
+      "title": "What is your calling?",
+      "subtitle": "Select your role to personalize your experience",
+      "confirm": "Confirm",
+      "skip": "Skip for now"
+    },
+    "profile": {
+      "title": "Profile",
+      "userFallback": "User",
+      "leadershipFallback": "Leadership",
+      "bishopric": "Bishopric",
+      "wardSection": "Your ward",
+      "branch": "Branch",
+      "ward": "Ward",
+      "district": "District",
+      "stake": "Stake",
+      "connected": "Connected",
+      "joinedCreated": "Ward creator",
+      "joinedCode": "By code",
+      "joinedInvited": "Invited",
+      "callingSection": "Your calling",
+      "currentCalling": "Current calling",
+      "organization": "Organization",
+      "changeCalling": "Change calling",
+      "accountSection": "Account",
+      "preferencesSection": "Preferences",
+      "email": "Email",
+      "userId": "User ID",
+      "accountStatus": "Account status",
+      "accountStatusValue": "Active",
+      "language": "Language",
+      "appearance": "Appearance",
+      "appSection": "Application",
+      "version": "Version",
+      "storage": "Storage",
+      "storageValue": "Local + Cloud",
+      "logout": "Sign out",
+      "loggingOut": "Signing out...",
+      "footerSubtitle": "Tools to serve better",
+      "errors": {
+        "logout": "Error during sign out",
+        "unknown": "Unknown error",
+        "sync": "Error while syncing",
+        "generic": "Error",
+        "hydrate": "Error loading from cloud"
+      },
+      "sync": {
+        "section": "Sync",
+        "lastSync": "Last sync",
+        "syncing": "Syncing...",
+        "syncNow": "Sync now",
+        "replaceFromCloud": "Replace from cloud",
+        "replaceConfirm": "This will replace your local data with cloud data. Continue?",
+        "loading": "Loading...",
+        "never": "Never",
+        "justNow": "Just now",
+        "minutesAgo": "{{count}} min ago",
+        "hoursAgo": "{{count}} h ago"
+      },
+      "theme": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
+    }
   }
 }

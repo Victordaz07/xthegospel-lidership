@@ -55,7 +55,7 @@ const LeadershipCallingsPage: React.FC = () => {
   return (
     <PageShell
       title="Llamamientos"
-      onBack={() => navigate('/home')}
+      onBack={() => navigate('/')}
       variant="gradient"
       headerActions={
         <Button

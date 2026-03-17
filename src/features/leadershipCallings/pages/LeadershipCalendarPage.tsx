@@ -144,7 +144,7 @@ const LeadershipCalendarPage: React.FC = () => {
   return (
     <div className="leadership-page">
       <header className="leadership-header">
-        <button className="back-button" onClick={() => navigate('/home')}>
+        <button className="back-button" onClick={() => navigate('/')}>
           ← Volver
         </button>
         <h1>Calendario</h1>
