@@ -5,11 +5,12 @@
  * Export PDF. Fase 4.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useI18n } from '../../../context/I18nContext';
 import { useWardStore } from '../../../state/ward/useWardStore';
 import { buildSessionReport, type SessionReport } from '../services/sessionReportService';
-import { PageShell, Card, Button, SectionTitle } from '../../../ui';
+import { PageShell, Card, Button, SectionTitle, TeachingCanonShell, TeachingCanonHeroHeader } from '../../../ui';
 
 // @ts-ignore - jspdf types may be missing
 import jsPDF from 'jspdf';
@@ -95,6 +96,7 @@ function exportToPdf(report: SessionReport): void {
 }
 
 const SessionReportPage: React.FC = () => {
+  const { t, locale } = useI18n();
   const { sessionId } = useParams<{ sessionId: string }>();
   const navigate = useNavigate();
   const location = useLocation();
@@ -173,24 +175,30 @@ const SessionReportPage: React.FC = () => {
 
   const callingLabel = CALLING_LABELS[report.callingType] ?? report.callingType;
 
-  return (
-    <PageShell
-      title="Reporte de sesión"
-      onBack={() => navigate(backTo)}
-      variant="gradient"
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
-        <Card variant="default" padding="lg">
-          <h2 style={{ margin: '0 0 8px 0', fontSize: 20 }}>{report.title}</h2>
-          <p style={{ margin: 0, fontSize: 14, color: 'var(--am-color-text-muted)' }}>
-            {callingLabel}
-            {report.teacherDisplayName && ` · ${report.teacherDisplayName}`}
-          </p>
-          <p style={{ margin: '4px 0 0 0', fontSize: 12, color: 'var(--am-color-text-muted)' }}>
-            {new Date(report.createdAt).toLocaleDateString('es')}
-          </p>
-        </Card>
+  const reportSubtitle = useMemo(() => {
+    const dateStr = new Date(report.createdAt).toLocaleDateString(
+      locale === 'en' ? 'en' : 'es',
+    );
+    const bits = [callingLabel];
+    if (report.teacherDisplayName) bits.push(report.teacherDisplayName);
+    bits.push(dateStr);
+    return bits.join(' · ');
+  }, [report, callingLabel, locale]);
 
+  const reportEyebrow = fromBishop
+    ? t('leadership.canon.bishopEyebrow')
+    : t('leadership.canon.reportEyebrow');
+
+  return (
+    <PageShell onBack={() => navigate(backTo)} variant="gradient">
+      <TeachingCanonShell>
+        <TeachingCanonHeroHeader
+          categoryLabel={reportEyebrow}
+          title={report.title}
+          subtitle={reportSubtitle}
+          heroNote={t('leadership.canon.reportHeroNote')}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
         <Card variant="default" padding="lg">
           <SectionTitle>Resumen</SectionTitle>
           <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginTop: 12 }}>
@@ -298,7 +306,8 @@ const SessionReportPage: React.FC = () => {
             Volver al listado
           </Button>
         </div>
-      </div>
+        </div>
+      </TeachingCanonShell>
     </PageShell>
   );
 };

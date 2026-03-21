@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { useAuth } from '../../../context/AuthContext';
+import { useI18n } from '../../../context/I18nContext';
 import { useWardStore } from '../../../state/ward/useWardStore';
 import {
   getSession,
@@ -19,6 +20,13 @@ import {
 } from '../services/teachingSessionsService';
 import type { TeachingSession, CallingType } from '../types';
 import { PageShell, Card, Button, SectionTitle } from '../../../ui';
+import {
+  TeachingCanonShell,
+  TeachingCanonHeroHeader,
+  TeachingCanonAudioCard,
+  TeachingCanonImagePlaceholder,
+  TeachingCanonReflectionHint,
+} from '../../../ui/teaching-canon';
 
 const CALLING_LABELS: Record<CallingType, string> = {
   sunday_school: 'Escuela Dominical',
@@ -30,6 +38,7 @@ const CALLING_LABELS: Record<CallingType, string> = {
 };
 
 const SessionDetailPage: React.FC = () => {
+  const { t } = useI18n();
   const { sessionId } = useParams<{ sessionId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -144,13 +153,42 @@ const SessionDetailPage: React.FC = () => {
     );
   }
 
+  const sessionSubtitle = t('leadership.canon.sessionSubtitle', {
+    calling: CALLING_LABELS[session.callingType],
+    parts: session.parts.length,
+  });
+
   return (
-    <PageShell
-      title={session.title}
-      onBack={() => navigate('/teaching')}
-      variant="gradient"
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
+    <PageShell onBack={() => navigate('/teaching')} variant="gradient">
+      <TeachingCanonShell>
+        <TeachingCanonHeroHeader
+          categoryLabel={t('leadership.canon.teachingEyebrow')}
+          title={session.title}
+          subtitle={sessionSubtitle}
+          heroNote={t('leadership.canon.sessionHeroNote')}
+        />
+        <TeachingCanonAudioCard
+          audio={{
+            eyebrow: t('leadership.canon.sessionAudioEyebrow'),
+            title: t('leadership.canon.sessionAudioTitle'),
+            summary: t('leadership.canon.sessionAudioSummary'),
+            scriptIntent: t('leadership.canon.sessionAudioIntent'),
+          }}
+          audioStatusLabel={t('leadership.canon.sessionAudioStatus')}
+        />
+        <TeachingCanonImagePlaceholder
+          image={{
+            label: t('leadership.canon.sessionImageLabel'),
+            title: t('leadership.canon.sessionImageTitle'),
+            prompt: t('leadership.canon.sessionImagePrompt'),
+            aspectRatio: '16:9',
+          }}
+        />
+        <TeachingCanonReflectionHint
+          label={t('leadership.canon.reflectionLabel')}
+          body={t('leadership.canon.reflectionBody')}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
         {isStaleActive && (
           <Card
             variant="default"
@@ -277,7 +315,8 @@ const SessionDetailPage: React.FC = () => {
             <p style={{ color: 'var(--am-color-text-muted)' }}>Sesión finalizada.</p>
           </Card>
         )}
-      </div>
+        </div>
+      </TeachingCanonShell>
     </PageShell>
   );
 };

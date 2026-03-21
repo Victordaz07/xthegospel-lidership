@@ -7,10 +7,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useI18n } from '../../../context/I18nContext';
 import { useWardStore } from '../../../state/ward/useWardStore';
 import { listSessionsForWard } from '../services/teachingSessionsService';
 import type { TeachingSession, CallingType } from '../types';
 import { PageShell, Card, Button, EmptyState, SectionTitle } from '../../../ui';
+import { TeachingCanonShell, TeachingCanonHeroHeader } from '../../../ui/teaching-canon';
 
 const STATUS_LABELS: Record<string, string> = {
   draft: 'Borrador',
@@ -38,6 +40,7 @@ const CALLING_OPTIONS: { value: CallingType | ''; label: string }[] = [
 ];
 
 const BishopTeachingDashboard: React.FC = () => {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const { membership } = useWardStore();
   const [sessions, setSessions] = useState<TeachingSession[]>([]);
@@ -72,11 +75,19 @@ const BishopTeachingDashboard: React.FC = () => {
 
   if (!wardId) {
     return (
-      <PageShell title="Clases del barrio" variant="gradient">
-        <EmptyState
-          title="Sin barrio"
-          description="Conéctate a un barrio para ver las clases."
-        />
+      <PageShell variant="gradient">
+        <TeachingCanonShell>
+          <TeachingCanonHeroHeader
+            categoryLabel={t('leadership.canon.bishopEyebrow')}
+            title={t('leadership.canon.bishopPageTitle')}
+            subtitle={t('leadership.canon.bishopSubtitle')}
+            heroNote={t('leadership.canon.bishopHeroNote')}
+          />
+          <EmptyState
+            title="Sin barrio"
+            description="Conéctate a un barrio para ver las clases."
+          />
+        </TeachingCanonShell>
       </PageShell>
     );
   }
@@ -85,8 +96,15 @@ const BishopTeachingDashboard: React.FC = () => {
   const completedCount = sessions.filter((s) => s.status === 'completed').length;
 
   return (
-    <PageShell title="Clases del barrio" variant="gradient">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
+    <PageShell variant="gradient">
+      <TeachingCanonShell>
+        <TeachingCanonHeroHeader
+          categoryLabel={t('leadership.canon.bishopEyebrow')}
+          title={t('leadership.canon.bishopPageTitle')}
+          subtitle={t('leadership.canon.bishopSubtitle')}
+          heroNote={t('leadership.canon.bishopHeroNote')}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
         <Button variant="secondary" fullWidth onClick={() => navigate('/bishop/teaching/analytics')}>
           📊 Ver métricas e insights
         </Button>
@@ -181,7 +199,8 @@ const BishopTeachingDashboard: React.FC = () => {
             ))}
           </>
         )}
-      </div>
+        </div>
+      </TeachingCanonShell>
     </PageShell>
   );
 };

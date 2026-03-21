@@ -12,7 +12,6 @@ import { Timestamp } from 'firebase/firestore';
 export type XtgAppKey = 
   | 'member'        // Active church member
   | 'investigator'  // Learning about the gospel
-  | 'missionary'    // Missionary preparation/service
   | 'leader'        // Ward/Stake leadership
   | 'teacher';      // Gospel teachers
 
@@ -154,7 +153,6 @@ export interface CreateProfileInput {
 export const DEFAULT_PROFILE_APPS: Record<XtgAppKey, boolean> = {
   member: false,
   investigator: false,
-  missionary: false,
   leader: false,
   teacher: false,
 };

@@ -8,10 +8,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { useI18n } from '../../../context/I18nContext';
 import { useWardStore } from '../../../state/ward/useWardStore';
 import { createDraftSession } from '../services/teachingSessionsService';
 import type { CallingType, TeachingSessionPart } from '../types';
-import { PageShell, Card, Button, SectionTitle } from '../../../ui';
+import {
+  PageShell,
+  Card,
+  Button,
+  SectionTitle,
+  TeachingCanonShell,
+  TeachingCanonHeroHeader,
+} from '../../../ui';
 
 const CALLING_OPTIONS: { value: CallingType; label: string }[] = [
   { value: 'sunday_school', label: 'Escuela Dominical' },
@@ -27,6 +35,7 @@ function generatePartId(): string {
 }
 
 const SessionCreatePage: React.FC = () => {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { membership } = useWardStore();
@@ -123,15 +132,30 @@ const SessionCreatePage: React.FC = () => {
 
   if (!wardId) {
     return (
-      <PageShell title="Nueva sesión" onBack={() => navigate(-1)} variant="gradient">
-        <p style={{ color: 'var(--am-color-text-muted)' }}>Conéctate a un barrio primero.</p>
+      <PageShell onBack={() => navigate(-1)} variant="gradient">
+        <TeachingCanonShell>
+          <TeachingCanonHeroHeader
+            categoryLabel={t('leadership.canon.teachingEyebrow')}
+            title={t('leadership.canon.sessionCreatePageTitle')}
+            subtitle={t('leadership.canon.sessionCreateSubtitle')}
+            heroNote={t('leadership.canon.sessionCreateHeroNote')}
+          />
+          <p style={{ color: 'var(--am-color-text-muted)' }}>Conéctate a un barrio primero.</p>
+        </TeachingCanonShell>
       </PageShell>
     );
   }
 
   return (
-    <PageShell title="Nueva sesión" onBack={() => navigate(-1)} variant="gradient">
-      <form onSubmit={handleSubmit}>
+    <PageShell onBack={() => navigate(-1)} variant="gradient">
+      <TeachingCanonShell>
+        <TeachingCanonHeroHeader
+          categoryLabel={t('leadership.canon.teachingEyebrow')}
+          title={t('leadership.canon.sessionCreatePageTitle')}
+          subtitle={t('leadership.canon.sessionCreateSubtitle')}
+          heroNote={t('leadership.canon.sessionCreateHeroNote')}
+        />
+        <form onSubmit={handleSubmit}>
         <Card variant="default" padding="lg" style={{ marginBottom: 24 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <div>
@@ -235,7 +259,8 @@ const SessionCreatePage: React.FC = () => {
         <Button type="submit" variant="primary" fullWidth loading={loading}>
           Crear sesión (borrador)
         </Button>
-      </form>
+        </form>
+      </TeachingCanonShell>
     </PageShell>
   );
 };

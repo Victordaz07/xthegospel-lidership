@@ -10,7 +10,6 @@ interface ImportMetaEnv {
   readonly VITE_CLOUD_SYNC_ENABLED?: string;
   readonly VITE_APP_URL_MEMBER?: string;
   readonly VITE_APP_URL_LEADER?: string;
-  readonly VITE_APP_URL_MISSIONARY?: string;
 }
 
 interface ImportMeta {

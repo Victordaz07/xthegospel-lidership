@@ -13,7 +13,6 @@ import { UniversalUserProfile, ShareableProfile } from '../types/user';
 export const APP_URLS = {
   member: import.meta.env.VITE_APP_URL_MEMBER || 'https://app.xthegospel.com',
   leader: import.meta.env.VITE_APP_URL_LEADER || 'https://leader.xthegospel.com',
-  missionary: import.meta.env.VITE_APP_URL_MISSIONARY || 'https://missionary.xthegospel.com',
 } as const;
 
 // ============================================

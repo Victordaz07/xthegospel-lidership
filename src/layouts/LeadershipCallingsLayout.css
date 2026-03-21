@@ -17,10 +17,11 @@
   overflow-y: auto;
   padding: var(--space-4);
   padding-bottom: calc(var(--space-12) + 72px); /* Space for bottom nav */
-  max-width: 600px;
+  max-width: min(840px, 100%);
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
+  background: linear-gradient(180deg, #f8fafc 0%, #f0fdf9 55%, #f8fafc 100%);
 }
 
 @media (min-width: 640px) {

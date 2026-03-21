@@ -6,7 +6,7 @@ import React, { ReactNode } from 'react';
 import './RoleBadge.css';
 
 export interface RoleBadgeProps {
-  role: 'investigator' | 'missionary' | 'member' | 'leader' | string;
+  role: 'investigator' | 'member' | 'leader' | string;
   label?: string;
   icon?: ReactNode;
   size?: 'sm' | 'md';
@@ -15,7 +15,6 @@ export interface RoleBadgeProps {
 
 const roleColors: Record<string, { bg: string; text: string }> = {
   investigator: { bg: 'var(--color-accent-100)', text: 'var(--color-accent-dark)' },
-  missionary: { bg: 'var(--color-primary-100)', text: 'var(--color-primary-dark)' },
   member: { bg: 'var(--color-secondary-100)', text: 'var(--color-secondary-dark)' },
   leader: { bg: 'var(--color-neutral-800)', text: 'var(--color-text-inverse)' },
 };

@@ -6,12 +6,21 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useI18n } from '../../../context/I18nContext';
 import { useWardStore } from '../../../state/ward/useWardStore';
 import {
   getWardTeachingStats,
   type WardTeachingStats,
 } from '../services/teachingAnalyticsService';
-import { PageShell, Card, Button, EmptyState, SectionTitle } from '../../../ui';
+import {
+  PageShell,
+  Card,
+  Button,
+  EmptyState,
+  SectionTitle,
+  TeachingCanonShell,
+  TeachingCanonHeroHeader,
+} from '../../../ui';
 
 const RANGE_OPTIONS = [
   { days: 7, label: '7 días' },
@@ -20,6 +29,7 @@ const RANGE_OPTIONS = [
 ];
 
 const TeachingAnalyticsPage: React.FC = () => {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const { membership } = useWardStore();
   const [stats, setStats] = useState<WardTeachingStats | null>(null);
@@ -53,19 +63,30 @@ const TeachingAnalyticsPage: React.FC = () => {
 
   if (!wardId) {
     return (
-      <PageShell title="Métricas" onBack={() => navigate('/bishop/teaching')} variant="gradient">
-        <EmptyState title="Sin barrio" description="Conéctate a un barrio para ver métricas." />
+      <PageShell onBack={() => navigate('/bishop/teaching')} variant="gradient">
+        <TeachingCanonShell>
+          <TeachingCanonHeroHeader
+            categoryLabel={t('leadership.canon.bishopEyebrow')}
+            title={t('leadership.canon.analyticsPageTitle')}
+            subtitle={t('leadership.canon.analyticsSubtitle')}
+            heroNote={t('leadership.canon.analyticsHeroNote')}
+          />
+          <EmptyState title="Sin barrio" description="Conéctate a un barrio para ver métricas." />
+        </TeachingCanonShell>
       </PageShell>
     );
   }
 
   return (
-    <PageShell
-      title="Métricas de clases"
-      onBack={() => navigate('/bishop/teaching')}
-      variant="gradient"
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
+    <PageShell onBack={() => navigate('/bishop/teaching')} variant="gradient">
+      <TeachingCanonShell>
+        <TeachingCanonHeroHeader
+          categoryLabel={t('leadership.canon.bishopEyebrow')}
+          title={t('leadership.canon.analyticsPageTitle')}
+          subtitle={t('leadership.canon.analyticsSubtitle')}
+          heroNote={t('leadership.canon.analyticsHeroNote')}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <label style={{ fontSize: 14, fontWeight: 500 }}>Período:</label>
           <select
@@ -217,7 +238,8 @@ const TeachingAnalyticsPage: React.FC = () => {
             )}
           </>
         )}
-      </div>
+        </div>
+      </TeachingCanonShell>
     </PageShell>
   );
 };

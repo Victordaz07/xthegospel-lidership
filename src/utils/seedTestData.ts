@@ -99,7 +99,7 @@ export const TEST_PROFILES: Partial<UniversalUserProfile>[] = [
     lastName: 'Fernández',
     email: 'laura.fernandez@test.com',
     memberStatus: 'returned',
-    apps: { ...DEFAULT_PROFILE_APPS, member: true, missionary: true },
+    apps: { ...DEFAULT_PROFILE_APPS, member: true },
     roles: {
       missionary: 'returned',
     },

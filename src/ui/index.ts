@@ -18,3 +18,6 @@ export type {
 
 // Components
 export * from './components';
+
+// Teaching UI canon (hero, placeholders, reflection)
+export * from './teaching-canon';

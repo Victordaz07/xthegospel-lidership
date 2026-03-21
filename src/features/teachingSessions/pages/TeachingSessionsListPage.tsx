@@ -8,10 +8,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { useI18n } from '../../../context/I18nContext';
 import { useWardStore } from '../../../state/ward/useWardStore';
 import { listSessionsForTeacher } from '../services/teachingSessionsService';
 import type { TeachingSession } from '../types';
 import { PageShell, Card, Button, EmptyState, SectionTitle } from '../../../ui';
+import { TeachingCanonShell, TeachingCanonHeroHeader } from '../../../ui/teaching-canon';
 
 const STATUS_LABELS: Record<string, string> = {
   draft: 'Borrador',
@@ -20,6 +22,7 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const TeachingSessionsListPage: React.FC = () => {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { membership } = useWardStore();
@@ -55,18 +58,33 @@ const TeachingSessionsListPage: React.FC = () => {
 
   if (!wardId) {
     return (
-      <PageShell title="Enseñando" variant="gradient">
-        <EmptyState
-          title="Sin barrio"
-          description="Conéctate a un barrio para crear sesiones."
-        />
+      <PageShell variant="gradient">
+        <TeachingCanonShell>
+          <TeachingCanonHeroHeader
+            categoryLabel={t('leadership.canon.teachingEyebrow')}
+            title={t('leadership.canon.teachingPageTitle')}
+            subtitle={t('leadership.canon.teachingSubtitle')}
+            heroNote={t('leadership.canon.teachingHeroNote')}
+          />
+          <EmptyState
+            title="Sin barrio"
+            description="Conéctate a un barrio para crear sesiones."
+          />
+        </TeachingCanonShell>
       </PageShell>
     );
   }
 
   return (
-    <PageShell title="Enseñando" variant="gradient">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
+    <PageShell variant="gradient">
+      <TeachingCanonShell>
+        <TeachingCanonHeroHeader
+          categoryLabel={t('leadership.canon.teachingEyebrow')}
+          title={t('leadership.canon.teachingPageTitle')}
+          subtitle={t('leadership.canon.teachingSubtitle')}
+          heroNote={t('leadership.canon.teachingHeroNote')}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
         {staleActiveSessions.length > 0 && (
           <Card
             variant="default"
@@ -164,7 +182,8 @@ const TeachingSessionsListPage: React.FC = () => {
             ))}
           </>
         )}
-      </div>
+        </div>
+      </TeachingCanonShell>
     </PageShell>
   );
 };

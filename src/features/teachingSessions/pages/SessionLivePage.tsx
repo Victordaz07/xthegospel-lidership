@@ -9,6 +9,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { useI18n } from '../../../context/I18nContext';
 import { useWardStore } from '../../../state/ward/useWardStore';
 import {
   subscribeToSession,
@@ -16,10 +17,27 @@ import {
   completeSession,
 } from '../services/teachingSessionsService';
 import { subscribeToParticipants, hasCompletedPart } from '../services/participantsService';
-import type { TeachingSession, SessionParticipant } from '../types';
-import { PageShell, Card, Button, SectionTitle } from '../../../ui';
+import type { TeachingSession, SessionParticipant, CallingType } from '../types';
+import {
+  PageShell,
+  Card,
+  Button,
+  SectionTitle,
+  TeachingCanonShell,
+  TeachingCanonHeroHeader,
+} from '../../../ui';
+
+const CALLING_LABELS: Record<CallingType, string> = {
+  sunday_school: 'Escuela Dominical',
+  seminary: 'Seminario',
+  quorum: 'Quórum',
+  relief_society: 'Sociedad de Socorro',
+  primary: 'Primaria',
+  other: 'Otro',
+};
 
 const SessionLivePage: React.FC = () => {
+  const { t } = useI18n();
   const { sessionId } = useParams<{ sessionId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -149,13 +167,20 @@ const SessionLivePage: React.FC = () => {
     );
   }
 
+  const liveSubtitle = t('leadership.canon.sessionLiveSubtitle', {
+    calling: CALLING_LABELS[session.callingType],
+  });
+
   return (
-    <PageShell
-      title={session.title}
-      onBack={() => navigate(`/teaching/${sessionId}`)}
-      variant="gradient"
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
+    <PageShell onBack={() => navigate(`/teaching/${sessionId}`)} variant="gradient">
+      <TeachingCanonShell>
+        <TeachingCanonHeroHeader
+          categoryLabel={t('leadership.canon.sessionLiveEyebrow')}
+          title={session.title}
+          subtitle={liveSubtitle}
+          heroNote={t('leadership.canon.sessionLiveHeroNote')}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
         {/* Parte actual */}
         <Card variant="default" padding="lg">
           <SectionTitle>Parte actual</SectionTitle>
@@ -266,7 +291,8 @@ const SessionLivePage: React.FC = () => {
             </ul>
           )}
         </Card>
-      </div>
+        </div>
+      </TeachingCanonShell>
     </PageShell>
   );
 };

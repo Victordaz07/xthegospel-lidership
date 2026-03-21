@@ -8,13 +8,16 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useI18n } from '../../../context/I18nContext';
 import { useCallingsStore } from '../state';
 import { useUserRoleStore } from '../../../state/user/useUserRoleStore';
 import { STATUS_LABELS, ORGANIZATION_LABELS } from '../types';
 import { PageShell, SectionTitle, Card, Button, EmptyState } from '../../../ui';
+import { TeachingCanonShell, TeachingCanonHeroHeader } from '../../../ui/teaching-canon';
 import './LeadershipPages.css';
 
 const LeadershipDashboardPage: React.FC = () => {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const callings = useCallingsStore(s => s.callings);
   const isBishopric = useUserRoleStore((s) => s.isBishopric);
@@ -32,14 +35,21 @@ const LeadershipDashboardPage: React.FC = () => {
   const callingsWithoutRecentFollowup = activeCallings.slice(0, 2); // Mock for now
 
   return (
-    <PageShell title="Liderazgo" variant="gradient">
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--spacing-6)',
-        }}
-      >
+    <PageShell variant="gradient">
+      <TeachingCanonShell>
+        <TeachingCanonHeroHeader
+          categoryLabel={t('leadership.canon.leadershipEyebrow')}
+          title={t('leadership.canon.dashboardTitle')}
+          subtitle={t('leadership.canon.dashboardSubtitle')}
+          heroNote={t('leadership.canon.dashboardHeroNote')}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--spacing-6)',
+          }}
+        >
         {/* Summary Cards - grid responsive via LeadershipPages.css .dashboard-summary */}
         <div className="dashboard-summary">
           <Card
@@ -213,7 +223,8 @@ const LeadershipDashboardPage: React.FC = () => {
             ))
           )}
         </div>
-      </div>
+        </div>
+      </TeachingCanonShell>
     </PageShell>
   );
 };
