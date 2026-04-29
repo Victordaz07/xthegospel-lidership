@@ -9,6 +9,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
+  GoogleAuthProvider,
+  signInWithPopup,
   User,
   UserCredential,
 } from 'firebase/auth';
@@ -51,6 +53,23 @@ export async function signIn(
     throw {
       code: error.code || 'auth/unknown-error',
       message: error.message || 'Failed to sign in',
+    } as AuthError;
+  }
+}
+
+/**
+ * Sign in with Google (popup). Requires Google provider enabled in Firebase Console.
+ */
+export async function signInWithGoogle(): Promise<UserCredential> {
+  try {
+    const auth = getFirebaseAuth();
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    return await signInWithPopup(auth, provider);
+  } catch (error: any) {
+    throw {
+      code: error.code || 'auth/unknown-error',
+      message: error.message || 'Failed to sign in with Google',
     } as AuthError;
   }
 }

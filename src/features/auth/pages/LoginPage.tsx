@@ -1,31 +1,50 @@
 /**
  * Login Page
- * 
- * Authentication page with login only (no registration).
- * Accounts must be created in the members app first.
+ *
+ * Sign-in with Google or email/password. Firebase Auth persists the session in this browser.
  */
 
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { SiGoogle } from 'react-icons/si';
 import { useAuth } from '../../../context/AuthContext';
 import { useI18n } from '../../../context/I18nContext';
+import { isSafeReturnTo } from '../../../utils/safeReturnTo';
 import './LoginPage.css';
+
+function isParticipantLoginContext(
+  context: string | null,
+  returnTo: string | null
+): boolean {
+  if (context === 'participant') return true;
+  if (!returnTo || !isSafeReturnTo(returnTo)) return false;
+  if (returnTo.startsWith('/join')) return true;
+  if (returnTo.startsWith('/session/') && returnTo.includes('/live')) return true;
+  return false;
+}
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const returnTo = searchParams.get('returnTo');
-  const { login, isLoading, error, clearError, isAuthenticated } = useAuth();
+  const returnToRaw = searchParams.get('returnTo');
+  const returnTo =
+    returnToRaw && isSafeReturnTo(returnToRaw) ? returnToRaw : null;
+  const loginContext = searchParams.get('context');
+  const isParticipant = isParticipantLoginContext(loginContext, returnTo);
+  const { login, loginWithGoogle, isLoading, error, clearError, isAuthenticated } = useAuth();
   const { t } = useI18n();
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);
+  const [googleBusy, setGoogleBusy] = useState(false);
+
+  const busy = isLoading || googleBusy;
 
   // Redirect if already authenticated
   React.useEffect(() => {
     if (isAuthenticated) {
-      const target = returnTo && returnTo.startsWith('/') ? returnTo : '/';
+      const target = returnTo ?? '/';
       navigate(target, { replace: true });
     }
   }, [isAuthenticated, navigate, returnTo]);
@@ -49,6 +68,19 @@ const LoginPage: React.FC = () => {
     }
   };
 
+  const handleGoogle = async () => {
+    setLocalError(null);
+    clearError();
+    try {
+      setGoogleBusy(true);
+      await loginWithGoogle();
+    } catch {
+      // Context already holds message
+    } finally {
+      setGoogleBusy(false);
+    }
+  };
+
   const displayError = localError || error;
 
   return (
@@ -56,11 +88,35 @@ const LoginPage: React.FC = () => {
       <div className="login-container">
         {/* Logo/Header */}
         <div className="login-header">
-          <div className="login-logo">👔</div>
-          <h1 className="login-title">{t('auth.login.title')}</h1>
+          <div className="login-logo" aria-hidden>
+            {isParticipant ? '📖' : '👔'}
+          </div>
+          <h1 className="login-title">
+            {isParticipant
+              ? t('auth.login.participant.title')
+              : t('auth.login.title')}
+          </h1>
           <p className="login-subtitle">
-            {t('auth.login.subtitle')}
+            {isParticipant
+              ? t('auth.login.participant.subtitle')
+              : t('auth.login.subtitle')}
           </p>
+        </div>
+
+        <div className="login-oauth">
+          <button
+            type="button"
+            className="login-google-btn"
+            onClick={() => void handleGoogle()}
+            disabled={busy}
+          >
+            <SiGoogle className="login-google-icon" aria-hidden />
+            {googleBusy ? t('auth.login.googleLoading') : t('auth.login.googleContinue')}
+          </button>
+        </div>
+
+        <div className="login-divider" role="presentation">
+          <span>{t('auth.login.orWithEmail')}</span>
         </div>
 
         {/* Form */}
@@ -77,7 +133,7 @@ const LoginPage: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t('auth.login.emailPlaceholder')}
               autoComplete="email"
-              disabled={isLoading}
+              disabled={busy}
             />
           </div>
 
@@ -93,7 +149,7 @@ const LoginPage: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               autoComplete="current-password"
-              disabled={isLoading}
+              disabled={busy}
             />
           </div>
 
@@ -106,7 +162,7 @@ const LoginPage: React.FC = () => {
           <button
             type="submit"
             className="login-button"
-            disabled={isLoading}
+            disabled={busy}
           >
             {isLoading ? (
               <span className="loading-spinner">⏳</span>
@@ -121,16 +177,15 @@ const LoginPage: React.FC = () => {
           <div className="login-info">
             <span className="info-icon">ℹ️</span>
             <p className="info-text">
-              {t('auth.login.infoText')}
-              <strong> xTheGospel</strong>
+              {isParticipant
+                ? t('auth.login.participant.infoText')
+                : t('auth.login.infoText')}
             </p>
           </div>
           <p className="info-subtext">
-            {t('auth.login.noAccountPrefix')}{' '}
-            <a href="https://xthegospel.com" target="_blank" rel="noopener noreferrer" className="info-link">
-              xthegospel.com
-            </a>
-            {' '}{t('auth.login.noAccountSuffix')}
+            {isParticipant
+              ? t('auth.login.participant.helpText')
+              : t('auth.login.helpText')}
           </p>
         </div>
       </div>

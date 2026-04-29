@@ -8,7 +8,7 @@
 import React, { createContext, useContext, ReactNode, useEffect, useMemo } from 'react';
 import { User } from 'firebase/auth';
 import { useAuthStore } from '../state/auth/useAuthStore';
-import { signIn, signUp, signOut } from '../services/firebase/authService';
+import { signIn, signUp, signOut, signInWithGoogle } from '../services/firebase/authService';
 
 export type UserRoleKey = 'leader' | 'member';
 
@@ -24,6 +24,7 @@ interface AuthContextType {
   
   // Auth actions
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
@@ -50,6 +51,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setError(null);
       await signIn(email, password);
+    } catch (err: any) {
+      const errorMessage = getAuthErrorMessage(err.code);
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    }
+  };
+
+  const loginWithGoogle = async (): Promise<void> => {
+    try {
+      setError(null);
+      await signInWithGoogle();
     } catch (err: any) {
       const errorMessage = getAuthErrorMessage(err.code);
       setError(errorMessage);
@@ -89,6 +101,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     error,
     userRole: 'leader', // Default role for this app
     login,
+    loginWithGoogle,
     register,
     logout,
     clearError,
@@ -112,7 +125,7 @@ export const useAuth = (): AuthContextType => {
 /**
  * Helper to translate Firebase Auth error codes to Spanish
  */
-function getAuthErrorMessage(code: string): string {
+function getAuthErrorMessage(code: string | undefined): string {
   const errorMessages: Record<string, string> = {
     'auth/email-already-in-use': 'Este correo ya está registrado',
     'auth/invalid-email': 'Correo electrónico inválido',
@@ -124,7 +137,13 @@ function getAuthErrorMessage(code: string): string {
     'auth/invalid-credential': 'Credenciales inválidas',
     'auth/too-many-requests': 'Demasiados intentos. Intenta más tarde',
     'auth/network-request-failed': 'Error de conexión. Verifica tu internet',
+    'auth/popup-closed-by-user': 'Inicio con Google cancelado',
+    'auth/cancelled-popup-request': 'Inicio con Google cancelado',
+    'auth/popup-blocked':
+      'El navegador bloqueó la ventana emergente. Permite ventanas emergentes para este sitio.',
+    'auth/account-exists-with-different-credential':
+      'Ya existe una cuenta con este correo usando otro método de acceso. Usa correo y contraseña o el mismo proveedor que usaste antes.',
   };
-  
-  return errorMessages[code] || 'Error de autenticación';
+
+  return errorMessages[code || ''] || 'Error de autenticación';
 }
