@@ -126,6 +126,10 @@ export const useAuth = (): AuthContextType => {
  * Helper to translate Firebase Auth error codes to Spanish
  */
 function getAuthErrorMessage(code: string | undefined): string {
+  const host =
+    typeof window !== 'undefined' && window.location
+      ? window.location.hostname
+      : '';
   const errorMessages: Record<string, string> = {
     'auth/email-already-in-use': 'Este correo ya está registrado',
     'auth/invalid-email': 'Correo electrónico inválido',
@@ -143,6 +147,7 @@ function getAuthErrorMessage(code: string | undefined): string {
       'El navegador bloqueó la ventana emergente. Permite ventanas emergentes para este sitio.',
     'auth/account-exists-with-different-credential':
       'Ya existe una cuenta con este correo usando otro método de acceso. Usa correo y contraseña o el mismo proveedor que usaste antes.',
+    'auth/unauthorized-domain': `Este dominio (${host}) no está autorizado para iniciar sesión con Google. En Firebase Console → Authentication → Settings → Authorized domains, pulsa «Add domain» y añade exactamente ese nombre (sin https ni rutas). Las URLs de preview de Vercel cambian en cada deploy: cada una debe añadirse, o prueba en tu dominio de producción ya autorizado.`,
   };
 
   return errorMessages[code || ''] || 'Error de autenticación';
